@@ -1,4 +1,11 @@
-module Key exposing (Key, majorKeyFromTonic, minorKeyFromTonic)
+module Key
+    exposing
+        ( Key
+        , majorKeyFromTonic
+        , minorKeyFromTonic
+        , relativeMajorOfKey
+        , relativeMinorOfKey
+        )
 
 import Note exposing (Note(..))
 import Scale exposing (Scale(..))
@@ -6,6 +13,36 @@ import Scale exposing (Scale(..))
 
 type Key
     = Key Note Scale
+
+
+relativeMajorOfKey : Maybe Key -> Maybe Key
+relativeMajorOfKey key =
+    case key of
+        Nothing ->
+            Nothing
+
+        Just (Key tonic scale) ->
+            case scale of
+                Minor degrees ->
+                    majorKeyFromTonic degrees.thirdDegree
+
+                Major _ ->
+                    Nothing
+
+
+relativeMinorOfKey : Maybe Key -> Maybe Key
+relativeMinorOfKey key =
+    case key of
+        Nothing ->
+            Nothing
+
+        Just (Key tonic scale) ->
+            case scale of
+                Major degrees ->
+                    minorKeyFromTonic degrees.sixthDegree
+
+                Minor _ ->
+                    Nothing
 
 
 majorKeyFromTonic : Note -> Maybe Key
