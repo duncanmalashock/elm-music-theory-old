@@ -1,6 +1,6 @@
 module Key
     exposing
-        ( Key
+        ( Key(Key)
         , scaleFromKey
         , majorKeyFromTonic
         , minorKeyFromTonic
