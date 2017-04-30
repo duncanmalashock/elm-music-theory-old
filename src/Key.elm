@@ -1,6 +1,7 @@
 module Key
     exposing
         ( Key
+        , scaleFromKey
         , majorKeyFromTonic
         , minorKeyFromTonic
         , relativeMajorOfKey
@@ -15,6 +16,11 @@ import Scale exposing (Scale(..))
 
 type Key
     = Key Note Scale
+
+
+scaleFromKey : Key -> Scale
+scaleFromKey (Key tonic scale) =
+    scale
 
 
 relativeMajorOfKey : Key -> Maybe Key
