@@ -1,8 +1,9 @@
 module Note
     exposing
         ( Note(..)
-        , enharmonicEquivalentPairs
         , getEnharmonicEquivalent
+        , distanceBetween
+        , getNoteByIntervalFrom
         )
 
 import Dict exposing (Dict)
@@ -49,6 +50,31 @@ notesByDistanceFromC =
         , ( 10, [ ASharp, BFlat ] )
         , ( 11, [ B, CFlat ] )
         ]
+
+
+distanceFromC : Note -> Int
+distanceFromC note =
+    Dict.toList notesByDistanceFromC
+        |> List.filter (\( key, val ) -> List.member note val)
+        |> List.head
+        |> Maybe.withDefault ( 0, [ C ] )
+        |> Tuple.first
+
+
+getNoteByIntervalFrom : Note -> Int -> List Note
+getNoteByIntervalFrom startNote interval =
+    let
+        index =
+            distanceFromC startNote
+                |> (+) interval
+                |> flip (%) 12
+    in
+        Maybe.withDefault [ C ] <| Dict.get index notesByDistanceFromC
+
+
+distanceBetween : Note -> Note -> Int
+distanceBetween noteOne noteTwo =
+    (distanceFromC noteTwo - distanceFromC noteOne) % 12
 
 
 enharmonicEquivalentPairs : List (List Note)
