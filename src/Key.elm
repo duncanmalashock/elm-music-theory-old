@@ -5,6 +5,8 @@ module Key
         , minorKeyFromTonic
         , relativeMajorOfKey
         , relativeMinorOfKey
+        , parallelMajorOfKey
+        , parallelMinorOfKey
         )
 
 import Note exposing (Note(..))
@@ -30,6 +32,26 @@ relativeMinorOfKey (Key tonic scale) =
     case scale of
         Major degrees ->
             Just (minorKeyFromTonic degrees.sixthDegree)
+
+        Minor _ ->
+            Nothing
+
+
+parallelMajorOfKey : Key -> Maybe Key
+parallelMajorOfKey (Key tonic scale) =
+    case scale of
+        Minor degrees ->
+            Just (majorKeyFromTonic tonic)
+
+        Major _ ->
+            Nothing
+
+
+parallelMinorOfKey : Key -> Maybe Key
+parallelMinorOfKey (Key tonic scale) =
+    case scale of
+        Major degrees ->
+            Just (minorKeyFromTonic tonic)
 
         Minor _ ->
             Nothing
