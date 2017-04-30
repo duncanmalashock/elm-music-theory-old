@@ -2,9 +2,11 @@ module Note
     exposing
         ( Note(..)
         , isEnharmonicEquivalent
+        , enharmonicEquivalentPairs
         , getEnharmonicEquivalent
         )
 
+import Dict exposing (Dict)
 import ListHelpers
 
 
@@ -16,8 +18,8 @@ type Note
     | DSharp
     | EFlat
     | E
-    | ESharp
     | FFlat
+    | ESharp
     | F
     | FSharp
     | GFlat
@@ -28,22 +30,32 @@ type Note
     | ASharp
     | BFlat
     | B
-    | BSharp
     | CFlat
+    | BSharp
+
+
+notesByDistanceFromC : Dict Int (List Note)
+notesByDistanceFromC =
+    Dict.fromList
+        [ ( 0, [ C, BSharp ] )
+        , ( 1, [ CSharp, DFlat ] )
+        , ( 2, [ D ] )
+        , ( 3, [ DSharp, EFlat ] )
+        , ( 4, [ E, FFlat ] )
+        , ( 5, [ F, ESharp ] )
+        , ( 6, [ FSharp, GFlat ] )
+        , ( 7, [ G ] )
+        , ( 8, [ GSharp, AFlat ] )
+        , ( 9, [ A ] )
+        , ( 10, [ ASharp, BFlat ] )
+        , ( 11, [ B, CFlat ] )
+        ]
 
 
 enharmonicEquivalentPairs : List (List Note)
 enharmonicEquivalentPairs =
-    [ [ BSharp, C ]
-    , [ CSharp, DFlat ]
-    , [ DSharp, EFlat ]
-    , [ E, FFlat ]
-    , [ ESharp, F ]
-    , [ FSharp, GFlat ]
-    , [ GSharp, AFlat ]
-    , [ ASharp, BFlat ]
-    , [ B, CFlat ]
-    ]
+    Dict.values notesByDistanceFromC
+        |> List.filter (\l -> (List.length l) > 1)
 
 
 getEnharmonicEquivalent : Note -> Note
