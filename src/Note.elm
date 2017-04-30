@@ -7,6 +7,8 @@ module Note
         , isSharp
         , isFlat
         , isNatural
+        , sharpen
+        , flatten
         )
 
 import Dict exposing (Dict)
@@ -86,6 +88,22 @@ isFlat note =
 isNatural : Note -> Bool
 isNatural note =
     List.member note naturalNotes
+
+
+sharpen : Note -> Note
+sharpen note =
+    getNoteByIntervalFrom note 1
+        |> List.filter (\n -> not (isFlat n))
+        |> List.head
+        |> Maybe.withDefault C
+
+
+flatten : Note -> Note
+flatten note =
+    getNoteByIntervalFrom note -1
+        |> List.filter (\n -> not (isSharp n))
+        |> List.head
+        |> Maybe.withDefault C
 
 
 notesByDistanceFromC : Dict Int (List Note)
