@@ -23,44 +23,24 @@ scaleFromKey (Key tonic scale) =
     scale
 
 
-relativeMajorOfKey : Key -> Maybe Key
-relativeMajorOfKey (Key tonic scale) =
+relativeKey : Key -> Key
+relativeKey (Key tonic scale) =
     case scale of
         Minor degrees ->
-            Just (majorKeyFromTonic degrees.thirdDegree)
+            majorKeyFromTonic degrees.thirdDegree
 
-        Major _ ->
-            Nothing
+        Major degrees ->
+            minorKeyFromTonic degrees.sixthDegree
 
 
-relativeMinorOfKey : Key -> Maybe Key
-relativeMinorOfKey (Key tonic scale) =
+parallelKey : Key -> Key
+parallelKey (Key tonic scale) =
     case scale of
         Major degrees ->
-            Just (minorKeyFromTonic degrees.sixthDegree)
+            minorKeyFromTonic tonic
 
-        Minor _ ->
-            Nothing
-
-
-parallelMajorOfKey : Key -> Maybe Key
-parallelMajorOfKey (Key tonic scale) =
-    case scale of
         Minor degrees ->
-            Just (majorKeyFromTonic tonic)
-
-        Major _ ->
-            Nothing
-
-
-parallelMinorOfKey : Key -> Maybe Key
-parallelMinorOfKey (Key tonic scale) =
-    case scale of
-        Major degrees ->
-            Just (minorKeyFromTonic tonic)
-
-        Minor _ ->
-            Nothing
+            majorKeyFromTonic tonic
 
 
 majorKeyFromTonic : Note -> Key
