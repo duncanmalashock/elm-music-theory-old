@@ -4,10 +4,8 @@ module Key
         , scaleFromKey
         , majorKeyFromTonic
         , minorKeyFromTonic
-        , relativeMajorOfKey
-        , relativeMinorOfKey
-        , parallelMajorOfKey
-        , parallelMinorOfKey
+        , relativeKey
+        , parallelKey
         )
 
 import Note exposing (Note(..))
