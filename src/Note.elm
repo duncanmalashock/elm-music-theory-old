@@ -1,7 +1,6 @@
 module Note
     exposing
         ( Note(..)
-        , isEnharmonicEquivalent
         , enharmonicEquivalentPairs
         , getEnharmonicEquivalent
         )
@@ -70,11 +69,3 @@ getEnharmonicEquivalent note =
             |> List.filter (\n -> n /= note)
             |> List.head
         )
-
-
-isEnharmonicEquivalent : Note -> Note -> Bool
-isEnharmonicEquivalent noteOne noteTwo =
-    List.map
-        (ListHelpers.isSameList [ noteOne, noteTwo ])
-        enharmonicEquivalentPairs
-        |> List.member True
