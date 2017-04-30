@@ -4,6 +4,9 @@ module Note
         , getEnharmonicEquivalent
         , distanceBetween
         , getNoteByIntervalFrom
+        , isSharp
+        , isFlat
+        , isNatural
         )
 
 import Dict exposing (Dict)
@@ -32,6 +35,57 @@ type Note
     | B
     | CFlat
     | BSharp
+
+
+sharpNotes : List Note
+sharpNotes =
+    [ CSharp
+    , DSharp
+    , ESharp
+    , FSharp
+    , GSharp
+    , ASharp
+    , BSharp
+    ]
+
+
+flatNotes : List Note
+flatNotes =
+    [ CFlat
+    , DFlat
+    , EFlat
+    , FFlat
+    , GFlat
+    , AFlat
+    , BFlat
+    ]
+
+
+naturalNotes : List Note
+naturalNotes =
+    [ C
+    , D
+    , E
+    , F
+    , G
+    , A
+    , B
+    ]
+
+
+isSharp : Note -> Bool
+isSharp note =
+    List.member note sharpNotes
+
+
+isFlat : Note -> Bool
+isFlat note =
+    List.member note flatNotes
+
+
+isNatural : Note -> Bool
+isNatural note =
+    List.member note naturalNotes
 
 
 notesByDistanceFromC : Dict Int (List Note)
