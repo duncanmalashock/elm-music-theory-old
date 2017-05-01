@@ -3,6 +3,7 @@ module Chord exposing (..)
 import Note exposing (Note(..))
 import Scale exposing (..)
 import Key exposing (..)
+import List.Extra
 
 
 type alias Chord =
@@ -42,3 +43,47 @@ minorChordWithRootAndFactors root factors =
             minorKeyFromTonic root
     in
         List.map (scaleDegree scale) factors
+
+
+toPairs : List a -> List ( a, a )
+toPairs lst =
+    case lst of
+        [] ->
+            []
+
+        x :: xs ->
+            List.Extra.zip lst (xs ++ [ x ])
+                |> List.reverse
+                |> List.drop 1
+                |> List.reverse
+
+
+scorePermutationsForRootPosition : Chord -> List ( Chord, Int )
+scorePermutationsForRootPosition chord =
+    let
+        allPermutations =
+            List.Extra.permutations chord
+
+        scoringFunction : Chord -> Int
+        scoringFunction chord =
+            toPairs chord
+                |> List.map (\( a, b ) -> Note.distanceBetween a b)
+                |> List.map
+                    (\interval ->
+                        case interval of
+                            3 ->
+                                0
+
+                            4 ->
+                                0
+
+                            _ ->
+                                if interval > 4 then
+                                    interval - 4
+                                else
+                                    3 - interval
+                    )
+                |> List.sum
+    in
+        List.map (\c -> ( c, scoringFunction c )) allPermutations
+            |> List.sortBy (\( p, v ) -> v)
