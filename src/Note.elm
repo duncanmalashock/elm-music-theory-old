@@ -25,7 +25,8 @@ type Accidental
     | Flat
     | DoubleSharp
     | DoubleFlat
-    | Error
+    | TripleSharp
+    | TripleFlat
 
 
 type Note
@@ -50,14 +51,11 @@ accidentalToSemitones accidental =
         DoubleFlat ->
             -2
 
-        Error ->
-            -9000
+        TripleSharp ->
+            3
 
-
-
-{- "Error" on the last line is a default value that should never be
-   returned.
--}
+        TripleFlat ->
+            -3
 
 
 semitonesToAccidental : Int -> Accidental
@@ -72,8 +70,10 @@ semitonesToAccidental semitones =
         DoubleSharp
     else if semitones == -2 then
         DoubleFlat
+    else if semitones == 3 then
+        TripleSharp
     else
-        Error
+        TripleFlat
 
 
 semitonesFromC : Note -> Int
