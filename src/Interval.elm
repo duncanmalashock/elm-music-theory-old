@@ -3,7 +3,6 @@ module Interval
         ( IntervalName(..)
         , Interval
         , interval
-        , quality
         , semitones
         , noteNameSteps
         )

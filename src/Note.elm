@@ -4,7 +4,8 @@ module Note
         , NoteName(..)
         , Accidental(..)
         , noteNameStepsAway
-        , accidentalSemitones
+        , semitonesBetween
+        , semitonesToAccidental
         )
 
 
@@ -24,14 +25,15 @@ type Accidental
     | Flat
     | DoubleSharp
     | DoubleFlat
+    | Error
 
 
 type Note
     = Note NoteName Accidental
 
 
-accidentalSemitones : Accidental -> Int
-accidentalSemitones accidental =
+accidentalToSemitones : Accidental -> Int
+accidentalToSemitones accidental =
     case accidental of
         Natural ->
             0
@@ -47,6 +49,68 @@ accidentalSemitones accidental =
 
         DoubleFlat ->
             -2
+
+        Error ->
+            -9000
+
+
+
+{- "Error" on the last line is a default value that should never be
+   returned.
+-}
+
+
+semitonesToAccidental : Int -> Accidental
+semitonesToAccidental semitones =
+    if semitones == 0 then
+        Natural
+    else if semitones == 1 then
+        Sharp
+    else if semitones == -1 then
+        Flat
+    else if semitones == 2 then
+        DoubleSharp
+    else if semitones == -2 then
+        DoubleFlat
+    else
+        Error
+
+
+semitonesFromC : Note -> Int
+semitonesFromC (Note noteName accidental) =
+    let
+        offset =
+            accidentalToSemitones accidental
+
+        noteSemitones =
+            case noteName of
+                C ->
+                    0
+
+                D ->
+                    2
+
+                E ->
+                    4
+
+                F ->
+                    5
+
+                G ->
+                    7
+
+                A ->
+                    9
+
+                B ->
+                    11
+    in
+        (noteSemitones + offset) % 12
+
+
+semitonesBetween : Note -> Note -> Int
+semitonesBetween startNote endNote =
+    ((semitonesFromC endNote) - (semitonesFromC startNote)) % 12
 
 
 noteNameStepsAway : NoteName -> Int -> NoteName
