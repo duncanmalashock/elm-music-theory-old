@@ -6,6 +6,7 @@ module Note
         , noteNameStepsAway
         , semitonesBetween
         , semitonesToAccidental
+        , simplifyAccidental
         )
 
 
@@ -27,6 +28,7 @@ type Accidental
     | DoubleFlat
     | TripleSharp
     | TripleFlat
+    | Error
 
 
 type Note
@@ -57,6 +59,9 @@ accidentalToSemitones accidental =
         TripleFlat ->
             -3
 
+        Error ->
+            50
+
 
 semitonesToAccidental : Int -> Accidental
 semitonesToAccidental semitones =
@@ -72,8 +77,10 @@ semitonesToAccidental semitones =
         DoubleFlat
     else if semitones == 3 then
         TripleSharp
-    else
+    else if semitones == -3 then
         TripleFlat
+    else
+        Error
 
 
 semitonesFromC : Note -> Int
@@ -111,6 +118,154 @@ semitonesFromC (Note noteName accidental) =
 semitonesBetween : Note -> Note -> Int
 semitonesBetween startNote endNote =
     ((semitonesFromC endNote) - (semitonesFromC startNote)) % 12
+
+
+simplifyAccidental : Note -> Note
+simplifyAccidental (Note noteName accidental) =
+    case accidental of
+        Natural ->
+            Note noteName accidental
+
+        Sharp ->
+            case noteName of
+                C ->
+                    Note C Sharp
+
+                D ->
+                    Note D Sharp
+
+                E ->
+                    Note F Natural
+
+                F ->
+                    Note F Sharp
+
+                G ->
+                    Note G Sharp
+
+                A ->
+                    Note A Sharp
+
+                B ->
+                    Note C Natural
+
+        Flat ->
+            case noteName of
+                C ->
+                    Note B Natural
+
+                D ->
+                    Note D Flat
+
+                E ->
+                    Note E Flat
+
+                F ->
+                    Note E Natural
+
+                G ->
+                    Note G Flat
+
+                A ->
+                    Note A Flat
+
+                B ->
+                    Note B Flat
+
+        DoubleSharp ->
+            case noteName of
+                C ->
+                    Note D Natural
+
+                D ->
+                    Note E Natural
+
+                E ->
+                    Note F Sharp
+
+                F ->
+                    Note G Natural
+
+                G ->
+                    Note A Natural
+
+                A ->
+                    Note B Natural
+
+                B ->
+                    Note C Sharp
+
+        DoubleFlat ->
+            case noteName of
+                C ->
+                    Note B Flat
+
+                D ->
+                    Note C Natural
+
+                E ->
+                    Note D Natural
+
+                F ->
+                    Note E Flat
+
+                G ->
+                    Note F Natural
+
+                A ->
+                    Note G Natural
+
+                B ->
+                    Note A Natural
+
+        TripleSharp ->
+            case noteName of
+                C ->
+                    Note D Sharp
+
+                D ->
+                    Note F Natural
+
+                E ->
+                    Note G Natural
+
+                F ->
+                    Note G Sharp
+
+                G ->
+                    Note A Sharp
+
+                A ->
+                    Note C Natural
+
+                B ->
+                    Note D Natural
+
+        TripleFlat ->
+            case noteName of
+                C ->
+                    Note A Natural
+
+                D ->
+                    Note B Natural
+
+                E ->
+                    Note D Flat
+
+                F ->
+                    Note D Natural
+
+                G ->
+                    Note E Natural
+
+                A ->
+                    Note G Flat
+
+                B ->
+                    Note A Flat
+
+        Error ->
+            Note E Error
 
 
 noteNameStepsAway : NoteName -> Int -> NoteName
