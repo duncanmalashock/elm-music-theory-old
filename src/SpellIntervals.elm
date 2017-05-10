@@ -15,8 +15,8 @@ import Interval
         )
 
 
-noteNameAtIntervalFrom : Interval -> NoteName -> NoteName
-noteNameAtIntervalFrom interval noteName =
+noteNameAtIntervalFrom : NoteName -> Interval -> NoteName
+noteNameAtIntervalFrom noteName interval =
     Note.noteNameStepsAway noteName (Interval.noteNameSteps interval)
 
 
@@ -27,7 +27,7 @@ getNoteAtIntervalFrom (Note noteName accidental) interval =
             Note noteName accidental
 
         newNoteName =
-            noteNameAtIntervalFrom interval noteName
+            noteNameAtIntervalFrom noteName interval
 
         semitonesInInterval =
             Interval.semitones interval
