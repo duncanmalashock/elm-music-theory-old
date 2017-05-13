@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="style/css/index.css" /> </head>
+
+<body>
+  <script src="js/elm.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js"></script>
+  <script>
+    elm = Elm.Main.embed(document.querySelector("body"));
+    var socket = io.connect('http://localhost:1025');
+    elm.ports.sendNote.subscribe(function(data) {
+      socket.emit('sendNote', data);
+    });
+  </script>
+</body>
+
+</html>
