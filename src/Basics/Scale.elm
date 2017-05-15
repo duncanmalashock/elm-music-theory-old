@@ -1,4 +1,4 @@
-module Scale
+module Basics.Scale
     exposing
         ( major
         , minor
@@ -10,22 +10,22 @@ module Scale
         , phrygian
         , locrian
         , degreeOfScale
+        , Scale
         )
 
-import SpellIntervals exposing (getNoteAtIntervalFrom)
-import Note
+import Basics.SpellIntervals as SpellIntervals exposing (getNoteAtIntervalFrom)
+import Basics.Note as Note
     exposing
         ( Note(..)
         , NoteName(..)
         , Accidental(..)
         )
-import Interval
+import Basics.Interval as Interval
     exposing
         ( Interval(..)
         , IntervalName(..)
         , interval
         )
-import Result exposing (fromMaybe)
 
 
 type Scale
@@ -150,8 +150,8 @@ locrian =
         }
 
 
-degreeOfScale : Int -> Scale -> Interval
-degreeOfScale i scale =
+degreeOfScale : Scale -> Int -> Interval
+degreeOfScale scale i =
     case scale of
         Lydian s ->
             degreeOfHeptatonicScale i s

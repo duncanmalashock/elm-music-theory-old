@@ -1,4 +1,4 @@
-module Note
+module Basics.Note
     exposing
         ( Note(..)
         , NoteName(..)

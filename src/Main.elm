@@ -1,6 +1,6 @@
 port module Main exposing (..)
 
-import Interval
+import Basics.Interval
     exposing
         ( IntervalName(..)
         , interval
