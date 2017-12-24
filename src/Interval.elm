@@ -4,7 +4,7 @@ module Interval
         , Interval
         , interval
         , semitones
-        , noteNameSteps
+        , letterNameDistance
         )
 
 
@@ -155,8 +155,8 @@ interval intervalName =
             Octave DiminishedPQ
 
 
-noteNameSteps : Interval -> Int
-noteNameSteps interval =
+letterNameDistance : Interval -> Int
+letterNameDistance interval =
     case interval of
         Unison _ ->
             0

@@ -6,7 +6,7 @@ module SpellIntervals
 import Note as Note
     exposing
         ( Note(..)
-        , NoteName(..)
+        , LetterName(..)
         , Accidental(..)
         )
 import Interval as Interval
@@ -15,25 +15,25 @@ import Interval as Interval
         )
 
 
-noteNameAtIntervalFrom : NoteName -> Interval -> NoteName
-noteNameAtIntervalFrom noteName interval =
-    Note.noteNameStepsAway noteName (Interval.noteNameSteps interval)
+letterNameAtIntervalFrom : LetterName -> Interval -> LetterName
+letterNameAtIntervalFrom letterName interval =
+    Note.letterNameAtDistance letterName (Interval.letterNameDistance interval)
 
 
 getNoteAtIntervalFrom : Note -> Interval -> Note
-getNoteAtIntervalFrom (Note noteName accidental) interval =
+getNoteAtIntervalFrom (Note letterName accidental) interval =
     let
         startNote =
-            Note noteName accidental
+            Note letterName accidental
 
-        newNoteName =
-            noteNameAtIntervalFrom noteName interval
+        newLetterName =
+            letterNameAtIntervalFrom letterName interval
 
         semitonesInInterval =
             Interval.semitones interval
 
         newNoteWithoutAccidentals =
-            Note newNoteName Natural
+            Note newLetterName Natural
 
         semitonesWithoutAccidental =
             Note.semitonesBetween startNote newNoteWithoutAccidentals
@@ -55,4 +55,4 @@ getNoteAtIntervalFrom (Note noteName accidental) interval =
         newAccidental =
             Note.semitonesToAccidental differenceWithoutAccidental
     in
-        Note newNoteName newAccidental
+        Note newLetterName newAccidental

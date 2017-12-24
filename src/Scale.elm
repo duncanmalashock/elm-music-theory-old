@@ -16,12 +16,7 @@ module Scale
         )
 
 import SpellIntervals as SpellIntervals exposing (getNoteAtIntervalFrom)
-import Note as Note
-    exposing
-        ( Note(..)
-        , NoteName(..)
-        , Accidental(..)
-        )
+import Note as Note exposing (Note(..))
 import Interval as Interval
     exposing
         ( Interval(..)

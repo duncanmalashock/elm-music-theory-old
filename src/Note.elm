@@ -1,16 +1,16 @@
 module Note
     exposing
         ( Note(..)
-        , NoteName(..)
+        , LetterName(..)
         , Accidental(..)
-        , noteNameStepsAway
+        , letterNameAtDistance
         , semitonesBetween
         , semitonesToAccidental
         , simplifyAccidental
         )
 
 
-type NoteName
+type LetterName
     = C
     | D
     | E
@@ -32,7 +32,7 @@ type Accidental
 
 
 type Note
-    = Note NoteName Accidental
+    = Note LetterName Accidental
 
 
 type alias Octave =
@@ -40,7 +40,7 @@ type alias Octave =
 
 
 type NoteOnStaff
-    = NoteOnStaff NoteName Accidental Octave
+    = NoteOnStaff LetterName Accidental Octave
 
 
 accidentalToSemitones : Accidental -> Int
@@ -276,34 +276,34 @@ simplifyAccidental (Note noteName accidental) =
             Note E Error
 
 
-noteNameStepsAway : NoteName -> Int -> NoteName
-noteNameStepsAway startingNoteName steps =
+letterNameAtDistance : LetterName -> Int -> LetterName
+letterNameAtDistance startingLetterName steps =
     let
-        nextNoteName : Int -> NoteName -> NoteName
-        nextNoteName i noteName =
+        nextLetterName : Int -> LetterName -> LetterName
+        nextLetterName i noteName =
             if i > 0 then
                 case noteName of
                     C ->
-                        nextNoteName (i - 1) D
+                        nextLetterName (i - 1) D
 
                     D ->
-                        nextNoteName (i - 1) E
+                        nextLetterName (i - 1) E
 
                     E ->
-                        nextNoteName (i - 1) F
+                        nextLetterName (i - 1) F
 
                     F ->
-                        nextNoteName (i - 1) G
+                        nextLetterName (i - 1) G
 
                     G ->
-                        nextNoteName (i - 1) A
+                        nextLetterName (i - 1) A
 
                     A ->
-                        nextNoteName (i - 1) B
+                        nextLetterName (i - 1) B
 
                     B ->
-                        nextNoteName (i - 1) C
+                        nextLetterName (i - 1) C
             else
                 noteName
     in
-        nextNoteName (steps % 8) startingNoteName
+        nextLetterName (steps % 8) startingLetterName
