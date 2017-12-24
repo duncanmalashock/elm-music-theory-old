@@ -1,4 +1,4 @@
-module Basics.Interval
+module Interval
     exposing
         ( IntervalName(..)
         , Interval

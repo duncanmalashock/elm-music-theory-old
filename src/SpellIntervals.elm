@@ -1,15 +1,15 @@
-module Basics.SpellIntervals
+module SpellIntervals
     exposing
         ( getNoteAtIntervalFrom
         )
 
-import Basics.Note as Note
+import Note as Note
     exposing
         ( Note(..)
         , NoteName(..)
         , Accidental(..)
         )
-import Basics.Interval as Interval
+import Interval as Interval
     exposing
         ( Interval
         )

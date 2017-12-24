@@ -1,4 +1,4 @@
-module Basics.Scale
+module Scale
     exposing
         ( major
         , minor
@@ -10,17 +10,20 @@ module Basics.Scale
         , phrygian
         , locrian
         , degreeOfScale
-        , Scale
+        , notesInScale
+        , isInScale
+        , ScaleType
+        , Scale(..)
         )
 
-import Basics.SpellIntervals as SpellIntervals exposing (getNoteAtIntervalFrom)
-import Basics.Note as Note
+import SpellIntervals as SpellIntervals exposing (getNoteAtIntervalFrom)
+import Note as Note
     exposing
         ( Note(..)
         , NoteName(..)
         , Accidental(..)
         )
-import Basics.Interval as Interval
+import Interval as Interval
     exposing
         ( Interval(..)
         , IntervalName(..)
@@ -29,6 +32,10 @@ import Basics.Interval as Interval
 
 
 type Scale
+    = Scale Note ScaleType
+
+
+type ScaleType
     = Lydian HeptatonicScale
     | Ionian HeptatonicScale
     | Mixolydian HeptatonicScale
@@ -36,6 +43,25 @@ type Scale
     | Aeolian HeptatonicScale
     | Phrygian HeptatonicScale
     | Locrian HeptatonicScale
+
+
+type ScaleDegree
+    = First
+    | SharpFirst
+    | FlatSecond
+    | Second
+    | SharpSecond
+    | FlatThird
+    | Third
+    | Fourth
+    | SharpFourth
+    | FlatFifth
+    | Fifth
+    | SharpFifth
+    | FlatSixth
+    | Sixth
+    | FlatSeventh
+    | Seventh
 
 
 type alias HeptatonicScale =
@@ -49,17 +75,17 @@ type alias HeptatonicScale =
     }
 
 
-major : Scale
+major : ScaleType
 major =
     ionian
 
 
-minor : Scale
+minor : ScaleType
 minor =
     aeolian
 
 
-lydian : Scale
+lydian : ScaleType
 lydian =
     Lydian
         { first = interval PerfectUnison
@@ -72,7 +98,7 @@ lydian =
         }
 
 
-ionian : Scale
+ionian : ScaleType
 ionian =
     Ionian
         { first = interval PerfectUnison
@@ -85,7 +111,7 @@ ionian =
         }
 
 
-mixolydian : Scale
+mixolydian : ScaleType
 mixolydian =
     Mixolydian
         { first = interval PerfectUnison
@@ -98,7 +124,7 @@ mixolydian =
         }
 
 
-dorian : Scale
+dorian : ScaleType
 dorian =
     Dorian
         { first = interval PerfectUnison
@@ -111,7 +137,7 @@ dorian =
         }
 
 
-aeolian : Scale
+aeolian : ScaleType
 aeolian =
     Aeolian
         { first = interval PerfectUnison
@@ -124,7 +150,7 @@ aeolian =
         }
 
 
-phrygian : Scale
+phrygian : ScaleType
 phrygian =
     Phrygian
         { first = interval PerfectUnison
@@ -137,7 +163,7 @@ phrygian =
         }
 
 
-locrian : Scale
+locrian : ScaleType
 locrian =
     Locrian
         { first = interval PerfectUnison
@@ -150,29 +176,91 @@ locrian =
         }
 
 
-degreeOfScale : Scale -> Int -> Interval
-degreeOfScale scale i =
-    case scale of
-        Lydian s ->
-            degreeOfHeptatonicScale i s
+isInScale : Note -> Scale -> Bool
+isInScale note scale =
+    List.member note (notesInScale scale)
 
-        Ionian s ->
-            degreeOfHeptatonicScale i s
 
-        Mixolydian s ->
-            degreeOfHeptatonicScale i s
+degreeOfScale : Note -> Scale -> ScaleDegree
+degreeOfScale note scale =
+    let
+        (Scale root scaleType) =
+            scale
 
-        Dorian s ->
-            degreeOfHeptatonicScale i s
+        noteFromRoot =
+            getNoteAtIntervalFrom root
 
-        Aeolian s ->
-            degreeOfHeptatonicScale i s
+        degreeInScale note scaleDegrees =
+            if note == noteFromRoot scaleDegrees.first then
+                First
+            else if note == noteFromRoot scaleDegrees.second then
+                Second
+            else if note == noteFromRoot scaleDegrees.third then
+                Third
+            else if note == noteFromRoot scaleDegrees.fourth then
+                Fourth
+            else if note == noteFromRoot scaleDegrees.fifth then
+                Fifth
+            else if note == noteFromRoot scaleDegrees.sixth then
+                Sixth
+            else
+                Seventh
+    in
+        case (isInScale note scale) of
+            True ->
+                case scaleType of
+                    Lydian theScale ->
+                        degreeInScale note theScale
 
-        Phrygian s ->
-            degreeOfHeptatonicScale i s
+                    Ionian theScale ->
+                        degreeInScale note theScale
 
-        Locrian s ->
-            degreeOfHeptatonicScale i s
+                    Mixolydian theScale ->
+                        degreeInScale note theScale
+
+                    Dorian theScale ->
+                        degreeInScale note theScale
+
+                    Aeolian theScale ->
+                        degreeInScale note theScale
+
+                    Phrygian theScale ->
+                        degreeInScale note theScale
+
+                    Locrian theScale ->
+                        degreeInScale note theScale
+
+            False ->
+                SharpSecond
+
+
+notesInScale : Scale -> List Note
+notesInScale (Scale root scaleType) =
+    let
+        notesInHeptatonicScale s =
+            List.map (getNoteAtIntervalFrom root) (listFromHeptatonicScale s)
+    in
+        case scaleType of
+            Lydian s ->
+                notesInHeptatonicScale s
+
+            Ionian s ->
+                notesInHeptatonicScale s
+
+            Mixolydian s ->
+                notesInHeptatonicScale s
+
+            Dorian s ->
+                notesInHeptatonicScale s
+
+            Aeolian s ->
+                notesInHeptatonicScale s
+
+            Phrygian s ->
+                notesInHeptatonicScale s
+
+            Locrian s ->
+                notesInHeptatonicScale s
 
 
 degreeOfHeptatonicScale : Int -> HeptatonicScale -> Interval

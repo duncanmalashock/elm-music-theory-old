@@ -1,4 +1,4 @@
-module Basics.Note
+module Note
     exposing
         ( Note(..)
         , NoteName(..)
@@ -33,6 +33,14 @@ type Accidental
 
 type Note
     = Note NoteName Accidental
+
+
+type alias Octave =
+    Int
+
+
+type NoteOnStaff
+    = NoteOnStaff NoteName Accidental Octave
 
 
 accidentalToSemitones : Accidental -> Int
