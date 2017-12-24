@@ -9,7 +9,6 @@ module Scale
         , aeolian
         , phrygian
         , locrian
-        , degreeOfScale
         , notesInScale
         , isInScale
         , ScaleType
@@ -179,59 +178,6 @@ locrian =
 isInScale : Note -> Scale -> Bool
 isInScale note scale =
     List.member note (notesInScale scale)
-
-
-degreeOfScale : Note -> Scale -> ScaleDegree
-degreeOfScale note scale =
-    let
-        (Scale root scaleType) =
-            scale
-
-        noteFromRoot =
-            getNoteAtIntervalFrom root
-
-        degreeInScale note scaleDegrees =
-            if note == noteFromRoot scaleDegrees.first then
-                First
-            else if note == noteFromRoot scaleDegrees.second then
-                Second
-            else if note == noteFromRoot scaleDegrees.third then
-                Third
-            else if note == noteFromRoot scaleDegrees.fourth then
-                Fourth
-            else if note == noteFromRoot scaleDegrees.fifth then
-                Fifth
-            else if note == noteFromRoot scaleDegrees.sixth then
-                Sixth
-            else
-                Seventh
-    in
-        case (isInScale note scale) of
-            True ->
-                case scaleType of
-                    Lydian theScale ->
-                        degreeInScale note theScale
-
-                    Ionian theScale ->
-                        degreeInScale note theScale
-
-                    Mixolydian theScale ->
-                        degreeInScale note theScale
-
-                    Dorian theScale ->
-                        degreeInScale note theScale
-
-                    Aeolian theScale ->
-                        degreeInScale note theScale
-
-                    Phrygian theScale ->
-                        degreeInScale note theScale
-
-                    Locrian theScale ->
-                        degreeInScale note theScale
-
-            False ->
-                SharpSecond
 
 
 notesInScale : Scale -> List Note
