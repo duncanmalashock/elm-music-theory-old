@@ -30,7 +30,7 @@ getNoteAtIntervalFrom (Note letterName accidental) interval =
             letterNameAtIntervalFrom letterName interval
 
         semitonesInInterval =
-            Interval.semitones interval
+            Interval.semitoneDistance interval
 
         newNoteWithoutAccidentals =
             Note newLetterName Natural

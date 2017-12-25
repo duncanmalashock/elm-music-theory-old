@@ -13,7 +13,7 @@ suite =
                 \_ ->
                     let
                         semitonesInAMajorSeventh =
-                            Interval.semitones <| interval MajorSeventh
+                            Interval.semitoneDistance <| interval MajorSeventh
                     in
                         Expect.equal semitonesInAMajorSeventh 11
             ]

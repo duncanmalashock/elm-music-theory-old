@@ -3,7 +3,7 @@ module Interval
         ( IntervalName(..)
         , Interval
         , interval
-        , semitones
+        , semitoneDistance
         , letterNameDistance
         )
 
@@ -183,8 +183,8 @@ letterNameDistance interval =
             7
 
 
-semitones : Interval -> Int
-semitones interval =
+semitoneDistance : Interval -> Int
+semitoneDistance interval =
     let
         imperfectQualityNumber : ImperfectQuality -> Int
         imperfectQualityNumber quality =
