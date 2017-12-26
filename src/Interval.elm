@@ -1,10 +1,9 @@
 module Interval
     exposing
         ( IntervalName(..)
-        , Interval
+        , Interval(..)
         , interval
         , semitoneDistance
-        , letterNameDistance
         )
 
 
@@ -153,34 +152,6 @@ interval intervalName =
 
         DiminishedOctave ->
             Octave DiminishedPQ
-
-
-letterNameDistance : Interval -> Int
-letterNameDistance interval =
-    case interval of
-        Unison _ ->
-            0
-
-        Second _ ->
-            1
-
-        Third _ ->
-            2
-
-        Fourth _ ->
-            3
-
-        Fifth _ ->
-            4
-
-        Sixth _ ->
-            5
-
-        Seventh _ ->
-            6
-
-        Octave _ ->
-            7
 
 
 semitoneDistance : Interval -> Int

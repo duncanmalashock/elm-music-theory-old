@@ -1,23 +1,12 @@
-module SpellIntervals
-    exposing
-        ( getNoteAtIntervalFrom
-        )
+module SpellIntervals exposing (getNoteAtIntervalFrom)
 
-import Note as Note
-    exposing
-        ( Note(..)
-        , LetterName(..)
-        , Accidental(..)
-        )
-import Interval as Interval
-    exposing
-        ( Interval
-        )
+import Note as Note exposing (Note(..), LetterName(..), Accidental(..))
+import Interval as Interval exposing (Interval(..))
 
 
 letterNameAtIntervalFrom : LetterName -> Interval -> LetterName
 letterNameAtIntervalFrom letterName interval =
-    letterNameAtDistance letterName (Interval.letterNameDistance interval)
+    letterNameAtDistance letterName (letterNameDistance interval)
 
 
 semitonesToAccidental : Int -> Accidental
@@ -93,6 +82,34 @@ semitonesFromC (Note noteName accidental) =
                     11
     in
         (noteSemitones + offset) % 12
+
+
+letterNameDistance : Interval -> Int
+letterNameDistance interval =
+    case interval of
+        Unison _ ->
+            0
+
+        Second _ ->
+            1
+
+        Third _ ->
+            2
+
+        Fourth _ ->
+            3
+
+        Fifth _ ->
+            4
+
+        Sixth _ ->
+            5
+
+        Seventh _ ->
+            6
+
+        Octave _ ->
+            7
 
 
 semitonesBetween : Note -> Note -> Int
