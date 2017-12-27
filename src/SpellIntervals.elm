@@ -4,6 +4,44 @@ import Note as Note exposing (Note(..), LetterName(..), Accidental(..))
 import Interval as Interval exposing (Interval(..))
 
 
+getNoteAtIntervalFrom : Note -> Interval -> Note
+getNoteAtIntervalFrom (Note letterName accidental) interval =
+    let
+        startNote =
+            Note letterName accidental
+
+        newLetterName =
+            letterNameAtIntervalFrom letterName interval
+
+        semitonesInInterval =
+            Interval.semitoneDistance interval
+
+        newNoteWithoutAccidentals =
+            Note newLetterName Natural
+
+        semitonesWithoutAccidental =
+            semitonesBetween startNote newNoteWithoutAccidentals
+
+        differenceWithoutAccidental =
+            let
+                adjust : Int -> Int
+                adjust x =
+                    if x >= 6 then
+                        x - 12
+                    else if x <= -6 then
+                        x + 12
+                    else
+                        x
+            in
+                (semitonesInInterval - semitonesWithoutAccidental)
+                    |> adjust
+
+        newAccidental =
+            semitonesToAccidental differenceWithoutAccidental
+    in
+        Note newLetterName newAccidental
+
+
 letterNameAtIntervalFrom : LetterName -> Interval -> LetterName
 letterNameAtIntervalFrom letterName interval =
     letterNameAtDistance letterName (letterNameDistance interval)
@@ -148,44 +186,6 @@ letterNameAtDistance startingLetterName steps =
                 noteName
     in
         nextLetterName (steps % 8) startingLetterName
-
-
-getNoteAtIntervalFrom : Note -> Interval -> Note
-getNoteAtIntervalFrom (Note letterName accidental) interval =
-    let
-        startNote =
-            Note letterName accidental
-
-        newLetterName =
-            letterNameAtIntervalFrom letterName interval
-
-        semitonesInInterval =
-            Interval.semitoneDistance interval
-
-        newNoteWithoutAccidentals =
-            Note newLetterName Natural
-
-        semitonesWithoutAccidental =
-            semitonesBetween startNote newNoteWithoutAccidentals
-
-        differenceWithoutAccidental =
-            let
-                adjust : Int -> Int
-                adjust x =
-                    if x >= 6 then
-                        x - 12
-                    else if x <= -6 then
-                        x + 12
-                    else
-                        x
-            in
-                (semitonesInInterval - semitonesWithoutAccidental)
-                    |> adjust
-
-        newAccidental =
-            semitonesToAccidental differenceWithoutAccidental
-    in
-        Note newLetterName newAccidental
 
 
 simplifyAccidental : Note -> Note
