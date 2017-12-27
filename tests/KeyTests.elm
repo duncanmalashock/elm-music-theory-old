@@ -11,15 +11,31 @@ suite : Test
 suite =
     describe "Key module"
         [ describe "Key.chordAtDegree"
-            [ test "returns correct chord for the degree" <|
+            [ test "returns correct chords for the degrees" <|
                 \_ ->
                     let
                         dFlatMajor =
                             MajorKey <| Note D Flat
 
-                        chord =
-                            Key.chordAtDegree dFlatMajor III
+                        chords =
+                            List.map (Key.chordAtDegree dFlatMajor)
+                                [ I
+                                , II
+                                , III
+                                , IV
+                                , V
+                                , VI
+                                , VII
+                                ]
                     in
-                        Expect.equal chord <| Chord (Note F Natural) MinorSeven
+                        Expect.equal chords
+                            [ Chord (Note D Flat) MajorSeven
+                            , Chord (Note E Flat) MinorSeven
+                            , Chord (Note F Natural) MinorSeven
+                            , Chord (Note G Flat) MajorSeven
+                            , Chord (Note A Flat) DominantSeven
+                            , Chord (Note B Flat) MinorSeven
+                            , Chord (Note C Natural) MinorSevenFlatFive
+                            ]
             ]
         ]
