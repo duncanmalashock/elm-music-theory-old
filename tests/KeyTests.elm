@@ -53,4 +53,17 @@ suite =
                             , MinorKey (Note E Natural)
                             ]
             ]
+        , describe "Key.accidentalsInKey"
+            [ test "returns the sharp or flat notes in a key" <|
+                \_ ->
+                    let
+                        accidentals =
+                            MajorKey (Note B Flat)
+                                |> Key.accidentalsInKey
+                    in
+                        Expect.equal accidentals
+                            [ Note B Flat
+                            , Note E Flat
+                            ]
+            ]
         ]

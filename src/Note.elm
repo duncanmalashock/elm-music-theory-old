@@ -3,6 +3,7 @@ module Note
         ( Note(..)
         , LetterName(..)
         , Accidental(..)
+        , isNatural
         )
 
 
@@ -28,3 +29,8 @@ type Accidental
 
 type Note
     = Note LetterName Accidental
+
+
+isNatural : Note -> Bool
+isNatural (Note letterName accidental) =
+    accidental == Natural

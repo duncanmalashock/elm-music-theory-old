@@ -1,4 +1,12 @@
-module Key exposing (Key(..), Degree(..), allKeys, keysForChord, chordAtDegree)
+module Key
+    exposing
+        ( Key(..)
+        , Degree(..)
+        , allKeys
+        , keysForChord
+        , chordAtDegree
+        , accidentalsInKey
+        )
 
 import Note exposing (Note(..), LetterName(..), Accidental(..))
 import Chord exposing (Chord(..), ChordQuality(..))
@@ -51,6 +59,20 @@ allKeys =
     , MajorKey <| Note F Sharp
     , MinorKey <| Note D Sharp
     ]
+
+
+accidentalsInKey : Key -> List Note
+accidentalsInKey key =
+    let
+        notes =
+            case key of
+                MajorKey tonic ->
+                    Scale.notesInScale <| Scale.HeptatonicScale tonic (Scale.major)
+
+                MinorKey tonic ->
+                    Scale.notesInScale <| Scale.HeptatonicScale tonic (Scale.minor)
+    in
+        List.filter (\note -> not <| Note.isNatural note) notes
 
 
 isInKey : Key -> Chord -> Bool
