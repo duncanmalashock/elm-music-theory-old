@@ -11,8 +11,8 @@ module Scale
         , locrian
         , notesInScale
         , isInScale
-        , ScaleType
         , Scale(..)
+        , HeptatonicScaleIntervals
         )
 
 import SpellIntervals as SpellIntervals exposing (getNoteAtIntervalFrom)
@@ -26,17 +26,7 @@ import Interval as Interval
 
 
 type Scale
-    = Scale Note ScaleType
-
-
-type ScaleType
-    = Lydian HeptatonicScale
-    | Ionian HeptatonicScale
-    | Mixolydian HeptatonicScale
-    | Dorian HeptatonicScale
-    | Aeolian HeptatonicScale
-    | Phrygian HeptatonicScale
-    | Locrian HeptatonicScale
+    = HeptatonicScale Note HeptatonicScaleIntervals
 
 
 type ScaleDegree
@@ -58,7 +48,7 @@ type ScaleDegree
     | Seventh
 
 
-type alias HeptatonicScale =
+type alias HeptatonicScaleIntervals =
     { first : Interval
     , second : Interval
     , third : Interval
@@ -69,105 +59,98 @@ type alias HeptatonicScale =
     }
 
 
-major : ScaleType
+major : HeptatonicScaleIntervals
 major =
     ionian
 
 
-minor : ScaleType
+minor : HeptatonicScaleIntervals
 minor =
     aeolian
 
 
-lydian : ScaleType
+lydian : HeptatonicScaleIntervals
 lydian =
-    Lydian
-        { first = interval PerfectUnison
-        , second = interval MajorSecond
-        , third = interval MajorThird
-        , fourth = interval AugmentedFourth
-        , fifth = interval PerfectFifth
-        , sixth = interval MajorSixth
-        , seventh = interval MajorSeventh
-        }
+    { first = interval PerfectUnison
+    , second = interval MajorSecond
+    , third = interval MajorThird
+    , fourth = interval AugmentedFourth
+    , fifth = interval PerfectFifth
+    , sixth = interval MajorSixth
+    , seventh = interval MajorSeventh
+    }
 
 
-ionian : ScaleType
+ionian : HeptatonicScaleIntervals
 ionian =
-    Ionian
-        { first = interval PerfectUnison
-        , second = interval MajorSecond
-        , third = interval MajorThird
-        , fourth = interval PerfectFourth
-        , fifth = interval PerfectFifth
-        , sixth = interval MajorSixth
-        , seventh = interval MajorSeventh
-        }
+    { first = interval PerfectUnison
+    , second = interval MajorSecond
+    , third = interval MajorThird
+    , fourth = interval PerfectFourth
+    , fifth = interval PerfectFifth
+    , sixth = interval MajorSixth
+    , seventh = interval MajorSeventh
+    }
 
 
-mixolydian : ScaleType
+mixolydian : HeptatonicScaleIntervals
 mixolydian =
-    Mixolydian
-        { first = interval PerfectUnison
-        , second = interval MajorSecond
-        , third = interval MajorThird
-        , fourth = interval PerfectFourth
-        , fifth = interval PerfectFifth
-        , sixth = interval MajorSixth
-        , seventh = interval MinorSeventh
-        }
+    { first = interval PerfectUnison
+    , second = interval MajorSecond
+    , third = interval MajorThird
+    , fourth = interval PerfectFourth
+    , fifth = interval PerfectFifth
+    , sixth = interval MajorSixth
+    , seventh = interval MinorSeventh
+    }
 
 
-dorian : ScaleType
+dorian : HeptatonicScaleIntervals
 dorian =
-    Dorian
-        { first = interval PerfectUnison
-        , second = interval MajorSecond
-        , third = interval MinorThird
-        , fourth = interval PerfectFourth
-        , fifth = interval PerfectFifth
-        , sixth = interval MajorSixth
-        , seventh = interval MinorSeventh
-        }
+    { first = interval PerfectUnison
+    , second = interval MajorSecond
+    , third = interval MinorThird
+    , fourth = interval PerfectFourth
+    , fifth = interval PerfectFifth
+    , sixth = interval MajorSixth
+    , seventh = interval MinorSeventh
+    }
 
 
-aeolian : ScaleType
+aeolian : HeptatonicScaleIntervals
 aeolian =
-    Aeolian
-        { first = interval PerfectUnison
-        , second = interval MajorSecond
-        , third = interval MinorThird
-        , fourth = interval PerfectFourth
-        , fifth = interval PerfectFifth
-        , sixth = interval MinorSixth
-        , seventh = interval MinorSeventh
-        }
+    { first = interval PerfectUnison
+    , second = interval MajorSecond
+    , third = interval MinorThird
+    , fourth = interval PerfectFourth
+    , fifth = interval PerfectFifth
+    , sixth = interval MinorSixth
+    , seventh = interval MinorSeventh
+    }
 
 
-phrygian : ScaleType
+phrygian : HeptatonicScaleIntervals
 phrygian =
-    Phrygian
-        { first = interval PerfectUnison
-        , second = interval MinorSecond
-        , third = interval MinorThird
-        , fourth = interval PerfectFourth
-        , fifth = interval PerfectFifth
-        , sixth = interval MinorSixth
-        , seventh = interval MinorSeventh
-        }
+    { first = interval PerfectUnison
+    , second = interval MinorSecond
+    , third = interval MinorThird
+    , fourth = interval PerfectFourth
+    , fifth = interval PerfectFifth
+    , sixth = interval MinorSixth
+    , seventh = interval MinorSeventh
+    }
 
 
-locrian : ScaleType
+locrian : HeptatonicScaleIntervals
 locrian =
-    Locrian
-        { first = interval PerfectUnison
-        , second = interval MinorSecond
-        , third = interval MinorThird
-        , fourth = interval PerfectFourth
-        , fifth = interval DiminishedFifth
-        , sixth = interval MinorSixth
-        , seventh = interval MinorSeventh
-        }
+    { first = interval PerfectUnison
+    , second = interval MinorSecond
+    , third = interval MinorThird
+    , fourth = interval PerfectFourth
+    , fifth = interval DiminishedFifth
+    , sixth = interval MinorSixth
+    , seventh = interval MinorSeventh
+    }
 
 
 isInScale : Note -> Scale -> Bool
@@ -176,47 +159,11 @@ isInScale note scale =
 
 
 notesInScale : Scale -> List Note
-notesInScale (Scale root scaleType) =
-    let
-        notesInHeptatonicScale s =
-            List.map (getNoteAtIntervalFrom root) (listFromHeptatonicScale s)
-    in
-        case scaleType of
-            Lydian s ->
-                notesInHeptatonicScale s
-
-            Ionian s ->
-                notesInHeptatonicScale s
-
-            Mixolydian s ->
-                notesInHeptatonicScale s
-
-            Dorian s ->
-                notesInHeptatonicScale s
-
-            Aeolian s ->
-                notesInHeptatonicScale s
-
-            Phrygian s ->
-                notesInHeptatonicScale s
-
-            Locrian s ->
-                notesInHeptatonicScale s
+notesInScale (HeptatonicScale root scaleIntervals) =
+    List.map (getNoteAtIntervalFrom root) <| listFromHeptatonicScale scaleIntervals
 
 
-degreeOfHeptatonicScale : Int -> HeptatonicScale -> Interval
-degreeOfHeptatonicScale i scale =
-    let
-        list =
-            listFromHeptatonicScale scale
-    in
-        Maybe.withDefault (interval PerfectUnison)
-            ((List.drop (i % 7) list)
-                |> List.head
-            )
-
-
-listFromHeptatonicScale : HeptatonicScale -> List Interval
+listFromHeptatonicScale : HeptatonicScaleIntervals -> List Interval
 listFromHeptatonicScale scale =
     [ scale.first
     , scale.second

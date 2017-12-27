@@ -14,7 +14,7 @@ suite =
                 \_ ->
                     let
                         notes =
-                            notesInScale (Scale (Note F Sharp) major)
+                            notesInScale (HeptatonicScale (Note F Sharp) major)
                     in
                         Expect.equal
                             notes
