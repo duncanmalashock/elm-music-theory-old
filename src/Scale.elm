@@ -29,25 +29,6 @@ type Scale
     = HeptatonicScale Note HeptatonicScaleIntervals
 
 
-type ScaleDegree
-    = First
-    | SharpFirst
-    | FlatSecond
-    | Second
-    | SharpSecond
-    | FlatThird
-    | Third
-    | Fourth
-    | SharpFourth
-    | FlatFifth
-    | Fifth
-    | SharpFifth
-    | FlatSixth
-    | Sixth
-    | FlatSeventh
-    | Seventh
-
-
 type alias HeptatonicScaleIntervals =
     { first : Interval
     , second : Interval
