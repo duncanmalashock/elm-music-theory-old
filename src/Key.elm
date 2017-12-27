@@ -31,7 +31,7 @@ allKeys =
     , MajorKey <| Note B Flat
     , MinorKey <| Note G Natural
     , MajorKey <| Note E Flat
-    , MinorKey <| Note C Sharp
+    , MinorKey <| Note C Natural
     , MajorKey <| Note A Flat
     , MinorKey <| Note F Natural
     , MajorKey <| Note D Flat
