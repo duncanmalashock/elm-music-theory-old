@@ -1,4 +1,4 @@
-module Key exposing (..)
+module Key exposing (Key(..), Degree(..), allKeys, keysForChord, chordAtDegree)
 
 import Note exposing (Note(..), LetterName(..), Accidental(..))
 import Chord exposing (Chord(..), ChordQuality(..))
