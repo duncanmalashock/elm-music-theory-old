@@ -8,5 +8,7 @@ type Chord
 
 
 type ChordQuality
-    = MajorSeventhChord
-    | MinorSeventhChord
+    = MajorSeven
+    | MinorSeven
+    | DominantSeven
+    | MinorSevenFlatFive
