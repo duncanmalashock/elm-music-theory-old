@@ -22,6 +22,47 @@ type Degree
     | VII
 
 
+allKeys : List Key
+allKeys =
+    [ MajorKey <| Note C Natural
+    , MinorKey <| Note A Natural
+    , MajorKey <| Note F Natural
+    , MinorKey <| Note D Natural
+    , MajorKey <| Note B Flat
+    , MinorKey <| Note G Natural
+    , MajorKey <| Note E Flat
+    , MinorKey <| Note C Sharp
+    , MajorKey <| Note A Flat
+    , MinorKey <| Note F Natural
+    , MajorKey <| Note D Flat
+    , MinorKey <| Note B Flat
+    , MajorKey <| Note G Flat
+    , MinorKey <| Note E Flat
+    , MajorKey <| Note G Natural
+    , MinorKey <| Note E Natural
+    , MajorKey <| Note D Natural
+    , MinorKey <| Note B Natural
+    , MajorKey <| Note A Natural
+    , MinorKey <| Note F Sharp
+    , MajorKey <| Note E Natural
+    , MinorKey <| Note C Sharp
+    , MajorKey <| Note B Natural
+    , MinorKey <| Note G Sharp
+    , MajorKey <| Note F Sharp
+    , MinorKey <| Note D Sharp
+    ]
+
+
+isInKey : Key -> Chord -> Bool
+isInKey key chord =
+    List.member chord (List.map (chordAtDegree key) [ I, II, III, IV, V, VI, VII ])
+
+
+keysForChord : Chord -> List Key
+keysForChord chord =
+    List.filter (\k -> isInKey k chord) allKeys
+
+
 degreeToHeptatonicScaleInterval : HeptatonicScaleIntervals -> Degree -> Interval
 degreeToHeptatonicScaleInterval scaleIntervals degree =
     case degree of

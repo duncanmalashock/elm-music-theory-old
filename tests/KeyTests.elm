@@ -38,4 +38,19 @@ suite =
                             , Chord (Note C Natural) MinorSevenFlatFive
                             ]
             ]
+        , describe "Key.keysForChord"
+            [ test "returns the keys a chord belongs to" <|
+                \_ ->
+                    let
+                        keys =
+                            Chord (Note C Natural) MajorSeven
+                                |> Key.keysForChord
+                    in
+                        Expect.equal keys
+                            [ MajorKey (Note C Natural)
+                            , MinorKey (Note A Natural)
+                            , MajorKey (Note G Natural)
+                            , MinorKey (Note E Natural)
+                            ]
+            ]
         ]
