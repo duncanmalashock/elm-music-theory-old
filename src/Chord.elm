@@ -33,19 +33,19 @@ seventhChordNotes (HeptatonicScale root scale) =
 
 notesInChord : Chord -> List Note
 notesInChord (Chord root chordQuality) =
-    case chordQuality of
-        MajorSeven ->
-            (HeptatonicScale root Scale.major)
-                |> seventhChordNotes
+    let
+        scale =
+            case chordQuality of
+                MajorSeven ->
+                    HeptatonicScale root Scale.major
 
-        MinorSeven ->
-            (HeptatonicScale root Scale.dorian)
-                |> seventhChordNotes
+                MinorSeven ->
+                    HeptatonicScale root Scale.dorian
 
-        DominantSeven ->
-            (HeptatonicScale root Scale.mixolydian)
-                |> seventhChordNotes
+                DominantSeven ->
+                    HeptatonicScale root Scale.mixolydian
 
-        MinorSevenFlatFive ->
-            (HeptatonicScale root Scale.locrian)
-                |> seventhChordNotes
+                MinorSevenFlatFive ->
+                    HeptatonicScale root Scale.locrian
+    in
+        seventhChordNotes scale
