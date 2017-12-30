@@ -1,4 +1,4 @@
-module Chord exposing (Chord(..), ChordQuality(..), isChordTone)
+module Chord exposing (Chord(..), ChordQuality(..), chord, isChordTone)
 
 import Scale exposing (Scale(..))
 import Note exposing (Note(..), LetterName(..), Accidental(..))
@@ -17,8 +17,8 @@ type ChordQuality
 
 
 isChordTone : Chord -> Note -> Bool
-isChordTone chord note =
-    List.member note (notesInChord chord)
+isChordTone theChord note =
+    List.member note (chord theChord)
 
 
 seventhChordNotes : Scale -> List Note
@@ -31,8 +31,8 @@ seventhChordNotes (HeptatonicScale root scale) =
         |> List.map (getNoteAtIntervalFrom root)
 
 
-notesInChord : Chord -> List Note
-notesInChord (Chord root chordQuality) =
+chord : Chord -> List Note
+chord (Chord root chordQuality) =
     let
         scale =
             case chordQuality of
