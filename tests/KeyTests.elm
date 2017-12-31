@@ -4,7 +4,6 @@ import Key exposing (Key(..), Degree(..))
 import Chord exposing (Chord, ChordQuality(..), chord)
 import Note exposing (Note, LetterName(..), Accidental(..), note)
 import Test exposing (..)
-import Expect
 import Helpers as Expect
 
 
@@ -29,7 +28,7 @@ suite =
                                 , VII
                                 ]
                     in
-                        Expect.equal chords
+                        Expect.chordListsEqual chords
                             [ chord (note D Flat) MajorSeven
                             , chord (note E Flat) MinorSeven
                             , chord (note F Natural) MinorSeven

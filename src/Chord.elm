@@ -1,4 +1,12 @@
-module Chord exposing (Chord, ChordQuality(..), chord, isChordTone, chordNotes)
+module Chord
+    exposing
+        ( Chord
+        , ChordQuality(..)
+        , chord
+        , isChordTone
+        , chordNotes
+        , toString
+        )
 
 import Scale exposing (Scale(..))
 import Note exposing (Note, LetterName(..), Accidental(..))
@@ -71,3 +79,24 @@ chordNotes chord =
                     HeptatonicScale root Scale.locrian
     in
         seventhChordNotes scale
+
+
+toString : Chord -> String
+toString (Chord root quality) =
+    Note.toString root ++ qualityToString quality
+
+
+qualityToString : ChordQuality -> String
+qualityToString chordQuality =
+    case chordQuality of
+        MajorSeven ->
+            "Δ"
+
+        MinorSeven ->
+            "-7"
+
+        DominantSeven ->
+            "7"
+
+        MinorSevenFlatFive ->
+            "-7♭5"
