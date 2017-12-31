@@ -1,8 +1,10 @@
 module Key
     exposing
-        ( Key(..)
-        , Degree(..)
+        ( Key
+        , majorKey
+        , minorKey
         , allKeys
+        , Degree(..)
         , keysForChord
         , chordAtDegree
         , accidentalsInKey
@@ -29,6 +31,16 @@ type Degree
     | V
     | VI
     | VII
+
+
+majorKey : PitchClass -> Key
+majorKey pitchClass =
+    MajorKey pitchClass
+
+
+minorKey : PitchClass -> Key
+minorKey pitchClass =
+    MinorKey pitchClass
 
 
 allKeys : List Key

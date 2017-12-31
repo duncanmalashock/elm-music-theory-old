@@ -2,7 +2,7 @@ module KeyTests exposing (suite)
 
 import PitchClass exposing (PitchClass, LetterName(..), Accidental(..), pitchClass)
 import Chord exposing (Chord, ChordQuality(..), chord)
-import Key exposing (Key(..), Degree(..))
+import Key exposing (Key, Degree(..), majorKey, minorKey)
 import Test exposing (..)
 import Helpers as Expect
 
@@ -15,7 +15,7 @@ suite =
                 \_ ->
                     let
                         dFlatMajor =
-                            MajorKey <| pitchClass D Flat
+                            majorKey <| pitchClass D Flat
 
                         chords =
                             List.map (Key.chordAtDegree dFlatMajor)
@@ -48,10 +48,10 @@ suite =
                     in
                         Expect.keyListsEqual
                             keys
-                            [ MajorKey (pitchClass C Natural)
-                            , MinorKey (pitchClass A Natural)
-                            , MajorKey (pitchClass G Natural)
-                            , MinorKey (pitchClass E Natural)
+                            [ majorKey (pitchClass C Natural)
+                            , minorKey (pitchClass A Natural)
+                            , majorKey (pitchClass G Natural)
+                            , minorKey (pitchClass E Natural)
                             ]
             ]
         , describe "Key.accidentalsInKey"
@@ -59,7 +59,7 @@ suite =
                 \_ ->
                     let
                         accidentals =
-                            MajorKey (pitchClass B Flat)
+                            majorKey (pitchClass B Flat)
                                 |> Key.accidentalsInKey
                     in
                         Expect.pitchClassListsEqual
