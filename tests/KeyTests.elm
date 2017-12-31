@@ -1,7 +1,7 @@
 module KeyTests exposing (suite)
 
 import Key exposing (Key(..), Degree(..))
-import Chord exposing (Chord(..), ChordQuality(..))
+import Chord exposing (Chord, ChordQuality(..), chord)
 import Note exposing (Note, LetterName(..), Accidental(..), note)
 import Test exposing (..)
 import Expect
@@ -29,13 +29,13 @@ suite =
                                 ]
                     in
                         Expect.equal chords
-                            [ Chord (note D Flat) MajorSeven
-                            , Chord (note E Flat) MinorSeven
-                            , Chord (note F Natural) MinorSeven
-                            , Chord (note G Flat) MajorSeven
-                            , Chord (note A Flat) DominantSeven
-                            , Chord (note B Flat) MinorSeven
-                            , Chord (note C Natural) MinorSevenFlatFive
+                            [ chord (note D Flat) MajorSeven
+                            , chord (note E Flat) MinorSeven
+                            , chord (note F Natural) MinorSeven
+                            , chord (note G Flat) MajorSeven
+                            , chord (note A Flat) DominantSeven
+                            , chord (note B Flat) MinorSeven
+                            , chord (note C Natural) MinorSevenFlatFive
                             ]
             ]
         , describe "Key.keysForChord"
@@ -43,7 +43,7 @@ suite =
                 \_ ->
                     let
                         keys =
-                            Chord (note C Natural) MajorSeven
+                            chord (note C Natural) MajorSeven
                                 |> Key.keysForChord
                     in
                         Expect.equal keys

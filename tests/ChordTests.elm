@@ -1,6 +1,6 @@
 module ChordTests exposing (suite)
 
-import Chord exposing (Chord(..), ChordQuality(..))
+import Chord exposing (Chord, ChordQuality(..), chord, chordNotes)
 import Note exposing (Note, LetterName(..), Accidental(..), note)
 import Test exposing (..)
 import Expect
@@ -14,9 +14,9 @@ suite =
                 \_ ->
                     let
                         cMajorSeven =
-                            Chord (note F Sharp) MajorSeven
+                            chord (note F Sharp) MajorSeven
                     in
-                        Expect.equal (Chord.chord cMajorSeven)
+                        Expect.equal (chordNotes cMajorSeven)
                             [ note F Sharp
                             , note A Sharp
                             , note C Sharp
@@ -28,7 +28,7 @@ suite =
                 \_ ->
                     let
                         cMajorSeven =
-                            Chord (note F Sharp) MajorSeven
+                            chord (note F Sharp) MajorSeven
 
                         e =
                             note E Sharp
