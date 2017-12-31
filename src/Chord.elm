@@ -1,7 +1,7 @@
 module Chord exposing (Chord(..), ChordQuality(..), chord, isChordTone)
 
 import Scale exposing (Scale(..))
-import Note exposing (Note(..), LetterName(..), Accidental(..))
+import Note exposing (Note, LetterName(..), Accidental(..))
 import SpellIntervals as SpellIntervals exposing (getNoteAtIntervalFrom)
 
 

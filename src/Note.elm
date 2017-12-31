@@ -1,9 +1,9 @@
 module Note
     exposing
-        ( Note(..)
+        ( Note
+        , PitchClass
         , LetterName(..)
         , Accidental(..)
-        , PitchClass(..)
         , note
         , noteWithOctave
         , noteWithOctaveAndDuration
