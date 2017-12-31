@@ -15,7 +15,7 @@ suite =
                 \_ ->
                     let
                         cMajorSeven =
-                            chord (pitchClass F Sharp) MajorSeven
+                            chord F Sharp MajorSeven
                     in
                         Expect.pitchClassListsEqual
                             (chordNotes cMajorSeven)
@@ -30,7 +30,7 @@ suite =
                 \_ ->
                     let
                         cMajorSeven =
-                            chord (pitchClass F Sharp) MajorSeven
+                            chord F Sharp MajorSeven
 
                         e =
                             pitchClass E Sharp

@@ -12,7 +12,7 @@ module Key
         )
 
 import PitchClass exposing (PitchClass, LetterName(..), Accidental(..), pitchClass)
-import Chord exposing (Chord, ChordQuality(..), chord)
+import Chord exposing (Chord, ChordQuality(..), chord, chordFromPitchClass)
 import Scale exposing (HeptatonicScaleIntervals)
 import Interval exposing (Interval)
 import SpellIntervals
@@ -157,7 +157,7 @@ chordAtDegree key degree =
                         VII ->
                             MinorSevenFlatFive
             in
-                chord root chordQuality
+                chordFromPitchClass root chordQuality
 
         MinorKey tonic ->
             let
@@ -190,7 +190,7 @@ chordAtDegree key degree =
                         VII ->
                             DominantSeven
             in
-                chord root chordQuality
+                chordFromPitchClass root chordQuality
 
 
 toString : Key -> String

@@ -29,13 +29,13 @@ suite =
                                 ]
                     in
                         Expect.chordListsEqual chords
-                            [ chord (pitchClass D Flat) MajorSeven
-                            , chord (pitchClass E Flat) MinorSeven
-                            , chord (pitchClass F Natural) MinorSeven
-                            , chord (pitchClass G Flat) MajorSeven
-                            , chord (pitchClass A Flat) DominantSeven
-                            , chord (pitchClass B Flat) MinorSeven
-                            , chord (pitchClass C Natural) MinorSevenFlatFive
+                            [ chord D Flat MajorSeven
+                            , chord E Flat MinorSeven
+                            , chord F Natural MinorSeven
+                            , chord G Flat MajorSeven
+                            , chord A Flat DominantSeven
+                            , chord B Flat MinorSeven
+                            , chord C Natural MinorSevenFlatFive
                             ]
             ]
         , describe "Key.keysForChord"
@@ -43,7 +43,7 @@ suite =
                 \_ ->
                     let
                         keys =
-                            chord (pitchClass C Natural) MajorSeven
+                            chord C Natural MajorSeven
                                 |> Key.keysForChord
                     in
                         Expect.keyListsEqual

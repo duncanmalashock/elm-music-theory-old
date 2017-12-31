@@ -3,13 +3,14 @@ module Chord
         ( Chord
         , ChordQuality(..)
         , chord
+        , chordFromPitchClass
         , isChordTone
         , chordNotes
         , toString
         )
 
 import Scale exposing (Scale(..))
-import PitchClass exposing (PitchClass)
+import PitchClass exposing (PitchClass, LetterName, Accidental, pitchClass)
 import SpellIntervals as SpellIntervals exposing (getNoteAtIntervalFrom)
 
 
@@ -53,8 +54,13 @@ qualityFromChord chord =
             quality
 
 
-chord : PitchClass -> ChordQuality -> Chord
-chord root quality =
+chord : LetterName -> Accidental -> ChordQuality -> Chord
+chord letterName accidental quality =
+    Chord (pitchClass letterName accidental) quality
+
+
+chordFromPitchClass : PitchClass -> ChordQuality -> Chord
+chordFromPitchClass root quality =
     Chord root quality
 
 
