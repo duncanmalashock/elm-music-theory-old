@@ -45,33 +45,41 @@ minorKey pitchClass =
 
 allKeys : List Key
 allKeys =
-    [ MajorKey <| pitchClass C Natural
-    , MinorKey <| pitchClass A Natural
-    , MajorKey <| pitchClass F Natural
-    , MinorKey <| pitchClass D Natural
-    , MajorKey <| pitchClass B Flat
-    , MinorKey <| pitchClass G Natural
-    , MajorKey <| pitchClass E Flat
-    , MinorKey <| pitchClass C Natural
-    , MajorKey <| pitchClass A Flat
-    , MinorKey <| pitchClass F Natural
-    , MajorKey <| pitchClass D Flat
-    , MinorKey <| pitchClass B Flat
-    , MajorKey <| pitchClass G Flat
-    , MinorKey <| pitchClass E Flat
-    , MajorKey <| pitchClass G Natural
-    , MinorKey <| pitchClass E Natural
-    , MajorKey <| pitchClass D Natural
-    , MinorKey <| pitchClass B Natural
-    , MajorKey <| pitchClass A Natural
-    , MinorKey <| pitchClass F Sharp
-    , MajorKey <| pitchClass E Natural
-    , MinorKey <| pitchClass C Sharp
-    , MajorKey <| pitchClass B Natural
-    , MinorKey <| pitchClass G Sharp
-    , MajorKey <| pitchClass F Sharp
-    , MinorKey <| pitchClass D Sharp
-    ]
+    let
+        majors =
+            [ pitchClass C Natural
+            , pitchClass F Natural
+            , pitchClass B Flat
+            , pitchClass E Flat
+            , pitchClass A Flat
+            , pitchClass D Flat
+            , pitchClass G Flat
+            , pitchClass G Natural
+            , pitchClass D Natural
+            , pitchClass A Natural
+            , pitchClass E Natural
+            , pitchClass B Natural
+            , pitchClass F Sharp
+            ]
+
+        minors =
+            [ pitchClass A Natural
+            , pitchClass D Natural
+            , pitchClass G Natural
+            , pitchClass C Natural
+            , pitchClass F Natural
+            , pitchClass B Flat
+            , pitchClass E Flat
+            , pitchClass E Natural
+            , pitchClass B Natural
+            , pitchClass F Sharp
+            , pitchClass C Sharp
+            , pitchClass G Sharp
+            , pitchClass D Sharp
+            ]
+    in
+        List.map majorKey majors
+            ++ List.map minorKey minors
 
 
 accidentalsInKey : Key -> List PitchClass
