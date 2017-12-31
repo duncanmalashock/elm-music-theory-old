@@ -3,7 +3,7 @@ module ScaleTests exposing (suite)
 import Note exposing (Note, LetterName(..), Accidental(..), note)
 import Scale exposing (Scale(..), notesInScale, major)
 import Test exposing (..)
-import Expect
+import Helpers as Expect
 
 
 suite : Test
@@ -25,10 +25,7 @@ suite =
                             , note D Sharp
                             , note E Sharp
                             ]
-
-                        allTrue =
-                            List.repeat (List.length expectedNotes) True
                     in
-                        Expect.equal allTrue <| List.map (\n -> List.member n expectedNotes) notes
+                        Expect.listsEqual notes expectedNotes
             ]
         ]

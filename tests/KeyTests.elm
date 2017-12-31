@@ -5,6 +5,7 @@ import Chord exposing (Chord, ChordQuality(..), chord)
 import Note exposing (Note, LetterName(..), Accidental(..), note)
 import Test exposing (..)
 import Expect
+import Helpers as Expect
 
 
 suite : Test
@@ -46,7 +47,8 @@ suite =
                             chord (note C Natural) MajorSeven
                                 |> Key.keysForChord
                     in
-                        Expect.equal keys
+                        Expect.listsEqual
+                            keys
                             [ MajorKey (note C Natural)
                             , MinorKey (note A Natural)
                             , MajorKey (note G Natural)
@@ -61,7 +63,8 @@ suite =
                             MajorKey (note B Flat)
                                 |> Key.accidentalsInKey
                     in
-                        Expect.equal accidentals
+                        Expect.listsEqual
+                            accidentals
                             [ note B Flat
                             , note E Flat
                             ]

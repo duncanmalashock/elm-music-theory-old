@@ -4,6 +4,7 @@ import Chord exposing (Chord, ChordQuality(..), chord, chordNotes)
 import Note exposing (Note, LetterName(..), Accidental(..), note)
 import Test exposing (..)
 import Expect
+import Helpers as Expect
 
 
 suite : Test
@@ -16,7 +17,8 @@ suite =
                         cMajorSeven =
                             chord (note F Sharp) MajorSeven
                     in
-                        Expect.equal (chordNotes cMajorSeven)
+                        Expect.listsEqual
+                            (chordNotes cMajorSeven)
                             [ note F Sharp
                             , note A Sharp
                             , note C Sharp
