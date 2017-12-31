@@ -1,32 +1,24 @@
-module SpellIntervals exposing (getNoteAtIntervalFrom)
+module SpellIntervals exposing (getPitchClassAtIntervalFrom)
 
-import Note
-    exposing
-        ( Note
-        , note
-        , letterNameFromNote
-        , accidentalFromNote
-        )
 import PitchClass
     exposing
         ( PitchClass
         , LetterName(..)
         , Accidental(..)
         , pitchClass
-        , letterNameFromPitchClass
-        , accidentalFromPitchClass
+        , letterName
         )
-import Interval as Interval exposing (Interval(..))
+import Interval exposing (Interval(..))
 
 
-getNoteAtIntervalFrom : PitchClass -> Interval -> PitchClass
-getNoteAtIntervalFrom theNote interval =
+getPitchClassAtIntervalFrom : PitchClass -> Interval -> PitchClass
+getPitchClassAtIntervalFrom thePitchClass interval =
     let
         startingLetterName =
-            letterNameFromPitchClass theNote
+            PitchClass.letterName thePitchClass
 
         startingAccidental =
-            accidentalFromPitchClass theNote
+            PitchClass.accidental thePitchClass
 
         newLetterName =
             letterNameAtIntervalFrom startingLetterName interval
@@ -111,10 +103,10 @@ semitonesFromC : PitchClass -> Int
 semitonesFromC pitchClass =
     let
         offset =
-            accidentalToSemitones <| accidentalFromPitchClass pitchClass
+            accidentalToSemitones <| PitchClass.accidental pitchClass
 
         noteSemitones =
-            case letterNameFromPitchClass pitchClass of
+            case PitchClass.letterName pitchClass of
                 C ->
                     0
 
@@ -168,8 +160,8 @@ letterNameDistance interval =
 
 
 semitonesBetween : PitchClass -> PitchClass -> Int
-semitonesBetween startNote endNote =
-    ((semitonesFromC endNote) - (semitonesFromC startNote)) % 12
+semitonesBetween startPitchClass endPitchClass =
+    ((semitonesFromC endPitchClass) - (semitonesFromC startPitchClass)) % 12
 
 
 letterNameAtDistance : LetterName -> Int -> LetterName
@@ -205,150 +197,150 @@ letterNameAtDistance startingLetterName steps =
         nextLetterName (steps % 8) startingLetterName
 
 
-simplifyAccidental : PitchClass -> Note
-simplifyAccidental pitchClass =
+simplifyAccidental : PitchClass -> PitchClass
+simplifyAccidental thePitchClass =
     let
         letterName =
-            letterNameFromPitchClass pitchClass
+            PitchClass.letterName thePitchClass
     in
-        case accidentalFromPitchClass pitchClass of
+        case PitchClass.accidental thePitchClass of
             Natural ->
-                note letterName Natural
+                pitchClass letterName Natural
 
             Sharp ->
-                case letterNameFromPitchClass pitchClass of
+                case PitchClass.letterName thePitchClass of
                     C ->
-                        note C Sharp
+                        pitchClass C Sharp
 
                     D ->
-                        note D Sharp
+                        pitchClass D Sharp
 
                     E ->
-                        note F Natural
+                        pitchClass F Natural
 
                     F ->
-                        note F Sharp
+                        pitchClass F Sharp
 
                     G ->
-                        note G Sharp
+                        pitchClass G Sharp
 
                     A ->
-                        note A Sharp
+                        pitchClass A Sharp
 
                     B ->
-                        note C Natural
+                        pitchClass C Natural
 
             Flat ->
                 case letterName of
                     C ->
-                        note B Natural
+                        pitchClass B Natural
 
                     D ->
-                        note D Flat
+                        pitchClass D Flat
 
                     E ->
-                        note E Flat
+                        pitchClass E Flat
 
                     F ->
-                        note E Natural
+                        pitchClass E Natural
 
                     G ->
-                        note G Flat
+                        pitchClass G Flat
 
                     A ->
-                        note A Flat
+                        pitchClass A Flat
 
                     B ->
-                        note B Flat
+                        pitchClass B Flat
 
             DoubleSharp ->
                 case letterName of
                     C ->
-                        note D Natural
+                        pitchClass D Natural
 
                     D ->
-                        note E Natural
+                        pitchClass E Natural
 
                     E ->
-                        note F Sharp
+                        pitchClass F Sharp
 
                     F ->
-                        note G Natural
+                        pitchClass G Natural
 
                     G ->
-                        note A Natural
+                        pitchClass A Natural
 
                     A ->
-                        note B Natural
+                        pitchClass B Natural
 
                     B ->
-                        note C Sharp
+                        pitchClass C Sharp
 
             DoubleFlat ->
                 case letterName of
                     C ->
-                        note B Flat
+                        pitchClass B Flat
 
                     D ->
-                        note C Natural
+                        pitchClass C Natural
 
                     E ->
-                        note D Natural
+                        pitchClass D Natural
 
                     F ->
-                        note E Flat
+                        pitchClass E Flat
 
                     G ->
-                        note F Natural
+                        pitchClass F Natural
 
                     A ->
-                        note G Natural
+                        pitchClass G Natural
 
                     B ->
-                        note A Natural
+                        pitchClass A Natural
 
             TripleSharp ->
                 case letterName of
                     C ->
-                        note D Sharp
+                        pitchClass D Sharp
 
                     D ->
-                        note F Natural
+                        pitchClass F Natural
 
                     E ->
-                        note G Natural
+                        pitchClass G Natural
 
                     F ->
-                        note G Sharp
+                        pitchClass G Sharp
 
                     G ->
-                        note A Sharp
+                        pitchClass A Sharp
 
                     A ->
-                        note C Natural
+                        pitchClass C Natural
 
                     B ->
-                        note D Natural
+                        pitchClass D Natural
 
             TripleFlat ->
                 case letterName of
                     C ->
-                        note A Natural
+                        pitchClass A Natural
 
                     D ->
-                        note B Natural
+                        pitchClass B Natural
 
                     E ->
-                        note D Flat
+                        pitchClass D Flat
 
                     F ->
-                        note D Natural
+                        pitchClass D Natural
 
                     G ->
-                        note E Natural
+                        pitchClass E Natural
 
                     A ->
-                        note G Flat
+                        pitchClass G Flat
 
                     B ->
-                        note A Flat
+                        pitchClass A Flat

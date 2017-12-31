@@ -54,13 +54,13 @@ suite =
                             , minorKey (pitchClass E Natural)
                             ]
             ]
-        , describe "Key.accidentalsInKey"
+        , describe "Key.accidentals"
             [ test "returns the sharp or flat notes in a key" <|
                 \_ ->
                     let
                         accidentals =
                             majorKey (pitchClass B Flat)
-                                |> Key.accidentalsInKey
+                                |> Key.accidentals
                     in
                         Expect.pitchClassListsEqual
                             accidentals

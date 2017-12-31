@@ -15,8 +15,6 @@ import PitchClass
         ( PitchClass
         , LetterName(..)
         , Accidental(..)
-        , letterNameFromPitchClass
-        , accidentalFromPitchClass
         )
 
 
@@ -82,26 +80,26 @@ letterNameFromNote : Note -> LetterName
 letterNameFromNote note =
     case note of
         Note pitchClass ->
-            letterNameFromPitchClass pitchClass
+            PitchClass.letterName pitchClass
 
         NoteWithOctave pitchClass _ ->
-            letterNameFromPitchClass pitchClass
+            PitchClass.letterName pitchClass
 
         NoteWithOctaveAndDuration pitchClass _ _ ->
-            letterNameFromPitchClass pitchClass
+            PitchClass.letterName pitchClass
 
 
 accidentalFromNote : Note -> Accidental
 accidentalFromNote note =
     case note of
         Note pitchClass ->
-            accidentalFromPitchClass pitchClass
+            PitchClass.accidental pitchClass
 
         NoteWithOctave pitchClass _ ->
-            accidentalFromPitchClass pitchClass
+            PitchClass.accidental pitchClass
 
         NoteWithOctaveAndDuration pitchClass _ _ ->
-            accidentalFromPitchClass pitchClass
+            PitchClass.accidental pitchClass
 
 
 pitchClassFromNote : Note -> PitchClass

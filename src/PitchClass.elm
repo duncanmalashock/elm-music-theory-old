@@ -4,8 +4,8 @@ module PitchClass
         , LetterName(..)
         , Accidental(..)
         , pitchClass
-        , letterNameFromPitchClass
-        , accidentalFromPitchClass
+        , letterName
+        , accidental
         , isNatural
         , toString
         )
@@ -40,19 +40,19 @@ pitchClass letterName accidental =
     PitchClass letterName accidental
 
 
-letterNameFromPitchClass : PitchClass -> LetterName
-letterNameFromPitchClass (PitchClass letterName _) =
+letterName : PitchClass -> LetterName
+letterName (PitchClass letterName _) =
     letterName
 
 
-accidentalFromPitchClass : PitchClass -> Accidental
-accidentalFromPitchClass (PitchClass _ accidental) =
+accidental : PitchClass -> Accidental
+accidental (PitchClass _ accidental) =
     accidental
 
 
 isNatural : PitchClass -> Bool
 isNatural note =
-    accidentalFromPitchClass note == Natural
+    accidental note == Natural
 
 
 toString : PitchClass -> String

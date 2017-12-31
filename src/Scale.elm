@@ -9,13 +9,13 @@ module Scale
         , aeolian
         , phrygian
         , locrian
-        , notesInScale
+        , pitchClassesInScale
         , isInScale
         , Scale(..)
         , HeptatonicScaleIntervals
         )
 
-import SpellIntervals exposing (getNoteAtIntervalFrom)
+import SpellIntervals
 import PitchClass exposing (PitchClass)
 import Interval
     exposing
@@ -136,12 +136,12 @@ locrian =
 
 isInScale : PitchClass -> Scale -> Bool
 isInScale pitchClass scale =
-    List.member pitchClass (notesInScale scale)
+    List.member pitchClass (pitchClassesInScale scale)
 
 
-notesInScale : Scale -> List PitchClass
-notesInScale (HeptatonicScale root scaleIntervals) =
-    List.map (getNoteAtIntervalFrom root) <| listFromHeptatonicScale scaleIntervals
+pitchClassesInScale : Scale -> List PitchClass
+pitchClassesInScale (HeptatonicScale root scaleIntervals) =
+    List.map (SpellIntervals.getPitchClassAtIntervalFrom root) <| listFromHeptatonicScale scaleIntervals
 
 
 listFromHeptatonicScale : HeptatonicScaleIntervals -> List Interval

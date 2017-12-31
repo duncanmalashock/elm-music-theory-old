@@ -1,6 +1,6 @@
 module ChordTests exposing (suite)
 
-import Chord exposing (Chord, ChordQuality(..), chord, chordNotes)
+import Chord exposing (Chord, ChordQuality(..), chord)
 import PitchClass exposing (PitchClass, LetterName(..), Accidental(..), pitchClass)
 import Test exposing (..)
 import Expect
@@ -10,7 +10,7 @@ import Helpers as Expect
 suite : Test
 suite =
     describe "Chord module"
-        [ describe "Chord.chord"
+        [ describe "Chord.pitchClasses"
             [ test "returns the notes of a chord" <|
                 \_ ->
                     let
@@ -18,7 +18,7 @@ suite =
                             chord F Sharp MajorSeven
                     in
                         Expect.pitchClassListsEqual
-                            (chordNotes cMajorSeven)
+                            (Chord.pitchClasses cMajorSeven)
                             [ pitchClass F Sharp
                             , pitchClass A Sharp
                             , pitchClass C Sharp

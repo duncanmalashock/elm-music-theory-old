@@ -7,7 +7,7 @@ module Key
         , Degree(..)
         , keysForChord
         , chordAtDegree
-        , accidentalsInKey
+        , accidentals
         , toString
         )
 
@@ -82,16 +82,16 @@ allKeys =
             ++ List.map minorKey minors
 
 
-accidentalsInKey : Key -> List PitchClass
-accidentalsInKey key =
+accidentals : Key -> List PitchClass
+accidentals key =
     let
         notes =
             case key of
                 MajorKey tonic ->
-                    Scale.notesInScale <| Scale.HeptatonicScale tonic (Scale.major)
+                    Scale.pitchClassesInScale <| Scale.HeptatonicScale tonic (Scale.major)
 
                 MinorKey tonic ->
-                    Scale.notesInScale <| Scale.HeptatonicScale tonic (Scale.minor)
+                    Scale.pitchClassesInScale <| Scale.HeptatonicScale tonic (Scale.minor)
     in
         List.filter (\note -> not <| PitchClass.isNatural note) notes
 
@@ -140,7 +140,7 @@ chordAtDegree key degree =
                     Scale.major
 
                 root =
-                    SpellIntervals.getNoteAtIntervalFrom tonic (degreeToHeptatonicScaleInterval intervals degree)
+                    SpellIntervals.getPitchClassAtIntervalFrom tonic (degreeToHeptatonicScaleInterval intervals degree)
 
                 chordQuality =
                     case degree of
@@ -173,7 +173,7 @@ chordAtDegree key degree =
                     Scale.minor
 
                 root =
-                    SpellIntervals.getNoteAtIntervalFrom tonic (degreeToHeptatonicScaleInterval intervals degree)
+                    SpellIntervals.getPitchClassAtIntervalFrom tonic (degreeToHeptatonicScaleInterval intervals degree)
 
                 chordQuality =
                     case degree of
