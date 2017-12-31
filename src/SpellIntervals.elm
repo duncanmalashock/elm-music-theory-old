@@ -1,26 +1,40 @@
 module SpellIntervals exposing (getNoteAtIntervalFrom)
 
-import Note as Note exposing (Note(..), LetterName(..), Accidental(..))
+import Note as Note
+    exposing
+        ( Note
+        , PitchClass
+        , LetterName(..)
+        , Accidental(..)
+        , note
+        , pitchClass
+        , letterNameFromNote
+        , accidentalFromNote
+        , letterNameFromPitchClass
+        , accidentalFromPitchClass
+        )
 import Interval as Interval exposing (Interval(..))
 
 
 getNoteAtIntervalFrom : Note -> Interval -> Note
-getNoteAtIntervalFrom (Note letterName accidental) interval =
+getNoteAtIntervalFrom theNote interval =
     let
-        startNote =
-            Note letterName accidental
+        startingLetterName =
+            letterNameFromNote theNote
+
+        startingAccidental =
+            accidentalFromNote theNote
 
         newLetterName =
-            letterNameAtIntervalFrom letterName interval
+            letterNameAtIntervalFrom startingLetterName interval
 
         semitonesInInterval =
             Interval.semitoneDistance interval
 
-        newNoteWithoutAccidentals =
-            Note newLetterName Natural
-
         semitonesWithoutAccidental =
-            semitonesBetween startNote newNoteWithoutAccidentals
+            semitonesBetween
+                (pitchClass startingLetterName startingAccidental)
+                (pitchClass newLetterName Natural)
 
         differenceWithoutAccidental =
             let
@@ -39,7 +53,7 @@ getNoteAtIntervalFrom (Note letterName accidental) interval =
         newAccidental =
             semitonesToAccidental differenceWithoutAccidental
     in
-        Note newLetterName newAccidental
+        note newLetterName newAccidental
 
 
 letterNameAtIntervalFrom : LetterName -> Interval -> LetterName
@@ -90,14 +104,14 @@ accidentalToSemitones accidental =
             -3
 
 
-semitonesFromC : Note -> Int
-semitonesFromC (Note noteName accidental) =
+semitonesFromC : PitchClass -> Int
+semitonesFromC pitchClass =
     let
         offset =
-            accidentalToSemitones accidental
+            accidentalToSemitones <| accidentalFromPitchClass pitchClass
 
         noteSemitones =
-            case noteName of
+            case letterNameFromPitchClass pitchClass of
                 C ->
                     0
 
@@ -150,7 +164,7 @@ letterNameDistance interval =
             7
 
 
-semitonesBetween : Note -> Note -> Int
+semitonesBetween : PitchClass -> PitchClass -> Int
 semitonesBetween startNote endNote =
     ((semitonesFromC endNote) - (semitonesFromC startNote)) % 12
 
@@ -188,146 +202,150 @@ letterNameAtDistance startingLetterName steps =
         nextLetterName (steps % 8) startingLetterName
 
 
-simplifyAccidental : Note -> Note
-simplifyAccidental (Note noteName accidental) =
-    case accidental of
-        Natural ->
-            Note noteName accidental
+simplifyAccidental : PitchClass -> Note
+simplifyAccidental pitchClass =
+    let
+        letterName =
+            letterNameFromPitchClass pitchClass
+    in
+        case accidentalFromPitchClass pitchClass of
+            Natural ->
+                note letterName Natural
 
-        Sharp ->
-            case noteName of
-                C ->
-                    Note C Sharp
+            Sharp ->
+                case letterNameFromPitchClass pitchClass of
+                    C ->
+                        note C Sharp
 
-                D ->
-                    Note D Sharp
+                    D ->
+                        note D Sharp
 
-                E ->
-                    Note F Natural
+                    E ->
+                        note F Natural
 
-                F ->
-                    Note F Sharp
+                    F ->
+                        note F Sharp
 
-                G ->
-                    Note G Sharp
+                    G ->
+                        note G Sharp
 
-                A ->
-                    Note A Sharp
+                    A ->
+                        note A Sharp
 
-                B ->
-                    Note C Natural
+                    B ->
+                        note C Natural
 
-        Flat ->
-            case noteName of
-                C ->
-                    Note B Natural
+            Flat ->
+                case letterName of
+                    C ->
+                        note B Natural
 
-                D ->
-                    Note D Flat
+                    D ->
+                        note D Flat
 
-                E ->
-                    Note E Flat
+                    E ->
+                        note E Flat
 
-                F ->
-                    Note E Natural
+                    F ->
+                        note E Natural
 
-                G ->
-                    Note G Flat
+                    G ->
+                        note G Flat
 
-                A ->
-                    Note A Flat
+                    A ->
+                        note A Flat
 
-                B ->
-                    Note B Flat
+                    B ->
+                        note B Flat
 
-        DoubleSharp ->
-            case noteName of
-                C ->
-                    Note D Natural
+            DoubleSharp ->
+                case letterName of
+                    C ->
+                        note D Natural
 
-                D ->
-                    Note E Natural
+                    D ->
+                        note E Natural
 
-                E ->
-                    Note F Sharp
+                    E ->
+                        note F Sharp
 
-                F ->
-                    Note G Natural
+                    F ->
+                        note G Natural
 
-                G ->
-                    Note A Natural
+                    G ->
+                        note A Natural
 
-                A ->
-                    Note B Natural
+                    A ->
+                        note B Natural
 
-                B ->
-                    Note C Sharp
+                    B ->
+                        note C Sharp
 
-        DoubleFlat ->
-            case noteName of
-                C ->
-                    Note B Flat
+            DoubleFlat ->
+                case letterName of
+                    C ->
+                        note B Flat
 
-                D ->
-                    Note C Natural
+                    D ->
+                        note C Natural
 
-                E ->
-                    Note D Natural
+                    E ->
+                        note D Natural
 
-                F ->
-                    Note E Flat
+                    F ->
+                        note E Flat
 
-                G ->
-                    Note F Natural
+                    G ->
+                        note F Natural
 
-                A ->
-                    Note G Natural
+                    A ->
+                        note G Natural
 
-                B ->
-                    Note A Natural
+                    B ->
+                        note A Natural
 
-        TripleSharp ->
-            case noteName of
-                C ->
-                    Note D Sharp
+            TripleSharp ->
+                case letterName of
+                    C ->
+                        note D Sharp
 
-                D ->
-                    Note F Natural
+                    D ->
+                        note F Natural
 
-                E ->
-                    Note G Natural
+                    E ->
+                        note G Natural
 
-                F ->
-                    Note G Sharp
+                    F ->
+                        note G Sharp
 
-                G ->
-                    Note A Sharp
+                    G ->
+                        note A Sharp
 
-                A ->
-                    Note C Natural
+                    A ->
+                        note C Natural
 
-                B ->
-                    Note D Natural
+                    B ->
+                        note D Natural
 
-        TripleFlat ->
-            case noteName of
-                C ->
-                    Note A Natural
+            TripleFlat ->
+                case letterName of
+                    C ->
+                        note A Natural
 
-                D ->
-                    Note B Natural
+                    D ->
+                        note B Natural
 
-                E ->
-                    Note D Flat
+                    E ->
+                        note D Flat
 
-                F ->
-                    Note D Natural
+                    F ->
+                        note D Natural
 
-                G ->
-                    Note E Natural
+                    G ->
+                        note E Natural
 
-                A ->
-                    Note G Flat
+                    A ->
+                        note G Flat
 
-                B ->
-                    Note A Flat
+                    B ->
+                        note A Flat

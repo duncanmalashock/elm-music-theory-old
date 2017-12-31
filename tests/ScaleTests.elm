@@ -1,6 +1,6 @@
 module ScaleTests exposing (suite)
 
-import Note exposing (Note(..), LetterName(..), Accidental(..))
+import Note exposing (Note, LetterName(..), Accidental(..), note)
 import Scale exposing (Scale(..), notesInScale, major)
 import Test exposing (..)
 import Expect
@@ -14,17 +14,17 @@ suite =
                 \_ ->
                     let
                         notes =
-                            notesInScale (HeptatonicScale (Note F Sharp) major)
+                            notesInScale (HeptatonicScale (note F Sharp) major)
                     in
                         Expect.equal
                             notes
-                            [ Note F Sharp
-                            , Note G Sharp
-                            , Note A Sharp
-                            , Note B Natural
-                            , Note C Sharp
-                            , Note D Sharp
-                            , Note E Sharp
+                            [ note F Sharp
+                            , note G Sharp
+                            , note A Sharp
+                            , note B Natural
+                            , note C Sharp
+                            , note D Sharp
+                            , note E Sharp
                             ]
             ]
         ]

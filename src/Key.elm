@@ -8,7 +8,7 @@ module Key
         , accidentalsInKey
         )
 
-import Note exposing (Note(..), LetterName(..), Accidental(..))
+import Note exposing (Note, LetterName(..), Accidental(..), note)
 import Chord exposing (Chord(..), ChordQuality(..))
 import Scale exposing (HeptatonicScaleIntervals)
 import Interval exposing (Interval)
@@ -32,32 +32,32 @@ type Degree
 
 allKeys : List Key
 allKeys =
-    [ MajorKey <| Note C Natural
-    , MinorKey <| Note A Natural
-    , MajorKey <| Note F Natural
-    , MinorKey <| Note D Natural
-    , MajorKey <| Note B Flat
-    , MinorKey <| Note G Natural
-    , MajorKey <| Note E Flat
-    , MinorKey <| Note C Natural
-    , MajorKey <| Note A Flat
-    , MinorKey <| Note F Natural
-    , MajorKey <| Note D Flat
-    , MinorKey <| Note B Flat
-    , MajorKey <| Note G Flat
-    , MinorKey <| Note E Flat
-    , MajorKey <| Note G Natural
-    , MinorKey <| Note E Natural
-    , MajorKey <| Note D Natural
-    , MinorKey <| Note B Natural
-    , MajorKey <| Note A Natural
-    , MinorKey <| Note F Sharp
-    , MajorKey <| Note E Natural
-    , MinorKey <| Note C Sharp
-    , MajorKey <| Note B Natural
-    , MinorKey <| Note G Sharp
-    , MajorKey <| Note F Sharp
-    , MinorKey <| Note D Sharp
+    [ MajorKey <| note C Natural
+    , MinorKey <| note A Natural
+    , MajorKey <| note F Natural
+    , MinorKey <| note D Natural
+    , MajorKey <| note B Flat
+    , MinorKey <| note G Natural
+    , MajorKey <| note E Flat
+    , MinorKey <| note C Natural
+    , MajorKey <| note A Flat
+    , MinorKey <| note F Natural
+    , MajorKey <| note D Flat
+    , MinorKey <| note B Flat
+    , MajorKey <| note G Flat
+    , MinorKey <| note E Flat
+    , MajorKey <| note G Natural
+    , MinorKey <| note E Natural
+    , MajorKey <| note D Natural
+    , MinorKey <| note B Natural
+    , MajorKey <| note A Natural
+    , MinorKey <| note F Sharp
+    , MajorKey <| note E Natural
+    , MinorKey <| note C Sharp
+    , MajorKey <| note B Natural
+    , MinorKey <| note G Sharp
+    , MajorKey <| note F Sharp
+    , MinorKey <| note D Sharp
     ]
 
 

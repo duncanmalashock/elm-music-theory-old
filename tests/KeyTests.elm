@@ -2,7 +2,7 @@ module KeyTests exposing (suite)
 
 import Key exposing (Key(..), Degree(..))
 import Chord exposing (Chord(..), ChordQuality(..))
-import Note exposing (Note(..), LetterName(..), Accidental(..))
+import Note exposing (Note, LetterName(..), Accidental(..), note)
 import Test exposing (..)
 import Expect
 
@@ -15,7 +15,7 @@ suite =
                 \_ ->
                     let
                         dFlatMajor =
-                            MajorKey <| Note D Flat
+                            MajorKey <| note D Flat
 
                         chords =
                             List.map (Key.chordAtDegree dFlatMajor)
@@ -29,13 +29,13 @@ suite =
                                 ]
                     in
                         Expect.equal chords
-                            [ Chord (Note D Flat) MajorSeven
-                            , Chord (Note E Flat) MinorSeven
-                            , Chord (Note F Natural) MinorSeven
-                            , Chord (Note G Flat) MajorSeven
-                            , Chord (Note A Flat) DominantSeven
-                            , Chord (Note B Flat) MinorSeven
-                            , Chord (Note C Natural) MinorSevenFlatFive
+                            [ Chord (note D Flat) MajorSeven
+                            , Chord (note E Flat) MinorSeven
+                            , Chord (note F Natural) MinorSeven
+                            , Chord (note G Flat) MajorSeven
+                            , Chord (note A Flat) DominantSeven
+                            , Chord (note B Flat) MinorSeven
+                            , Chord (note C Natural) MinorSevenFlatFive
                             ]
             ]
         , describe "Key.keysForChord"
@@ -43,14 +43,14 @@ suite =
                 \_ ->
                     let
                         keys =
-                            Chord (Note C Natural) MajorSeven
+                            Chord (note C Natural) MajorSeven
                                 |> Key.keysForChord
                     in
                         Expect.equal keys
-                            [ MajorKey (Note C Natural)
-                            , MinorKey (Note A Natural)
-                            , MajorKey (Note G Natural)
-                            , MinorKey (Note E Natural)
+                            [ MajorKey (note C Natural)
+                            , MinorKey (note A Natural)
+                            , MajorKey (note G Natural)
+                            , MinorKey (note E Natural)
                             ]
             ]
         , describe "Key.accidentalsInKey"
@@ -58,12 +58,12 @@ suite =
                 \_ ->
                     let
                         accidentals =
-                            MajorKey (Note B Flat)
+                            MajorKey (note B Flat)
                                 |> Key.accidentalsInKey
                     in
                         Expect.equal accidentals
-                            [ Note B Flat
-                            , Note E Flat
+                            [ note B Flat
+                            , note E Flat
                             ]
             ]
         ]
