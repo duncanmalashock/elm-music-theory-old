@@ -15,9 +15,8 @@ suite =
                     let
                         notes =
                             notesInScale (HeptatonicScale (note F Sharp) major)
-                    in
-                        Expect.equal
-                            notes
+
+                        expectedNotes =
                             [ note F Sharp
                             , note G Sharp
                             , note A Sharp
@@ -26,5 +25,10 @@ suite =
                             , note D Sharp
                             , note E Sharp
                             ]
+
+                        allTrue =
+                            List.repeat (List.length expectedNotes) True
+                    in
+                        Expect.equal allTrue <| List.map (\n -> List.member n expectedNotes) notes
             ]
         ]
