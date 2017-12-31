@@ -47,7 +47,7 @@ suite =
                             chord (note C Natural) MajorSeven
                                 |> Key.keysForChord
                     in
-                        Expect.listsEqual
+                        Expect.keyListsEqual
                             keys
                             [ MajorKey (note C Natural)
                             , MinorKey (note A Natural)
@@ -63,7 +63,7 @@ suite =
                             MajorKey (note B Flat)
                                 |> Key.accidentalsInKey
                     in
-                        Expect.listsEqual
+                        Expect.noteListsEqual
                             accidentals
                             [ note B Flat
                             , note E Flat

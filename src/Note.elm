@@ -14,7 +14,18 @@ module Note
         , pitchClass
         , letterNameFromPitchClass
         , accidentalFromPitchClass
+        , toString
         )
+
+
+type Note
+    = Note PitchClass
+    | NoteWithOctave PitchClass Octave
+    | NoteWithOctaveAndDuration PitchClass Octave Duration
+
+
+type PitchClass
+    = PitchClass LetterName Accidental
 
 
 type LetterName
@@ -37,6 +48,23 @@ type Accidental
     | TripleFlat
 
 
+type Octave
+    = Octave0
+    | Octave1
+    | Octave2
+    | Octave3
+    | Octave4
+    | Octave5
+    | Octave6
+    | Octave7
+    | Octave8
+    | Octave9
+
+
+type Duration
+    = Duration RhythmicValue RhythmicModifier
+
+
 type RhythmicValue
     = WholeNote
     | HalfNote
@@ -52,41 +80,14 @@ type RhythmicModifier
     | DoubleDotted
 
 
-type Duration
-    = Duration RhythmicValue RhythmicModifier
-
-
-type Octave
-    = Octave0
-    | Octave1
-    | Octave2
-    | Octave3
-    | Octave4
-    | Octave5
-    | Octave6
-    | Octave7
-    | Octave8
-    | Octave9
-
-
-type PitchClass
-    = PitchClass LetterName Accidental
+note : LetterName -> Accidental -> Note
+note letterName accidental =
+    Note (PitchClass letterName accidental)
 
 
 pitchClass : LetterName -> Accidental -> PitchClass
 pitchClass letterName accidental =
     PitchClass letterName accidental
-
-
-type Note
-    = Note PitchClass
-    | NoteWithOctave PitchClass Octave
-    | NoteWithOctaveAndDuration PitchClass Octave Duration
-
-
-note : LetterName -> Accidental -> Note
-note letterName accidental =
-    Note (PitchClass letterName accidental)
 
 
 noteWithOctave : LetterName -> Accidental -> Octave -> Note
@@ -151,3 +152,142 @@ pitchClassFromNote note =
 isNatural : Note -> Bool
 isNatural note =
     accidentalFromNote note == Natural
+
+
+toString : Note -> String
+toString note =
+    case note of
+        Note pitchClass ->
+            pitchClassToString pitchClass
+
+        NoteWithOctave pitchClass octave ->
+            pitchClassToString pitchClass ++ octaveToString octave
+
+        NoteWithOctaveAndDuration pitchClass octave duration ->
+            pitchClassToString pitchClass ++ octaveToString octave ++ " " ++ (durationToString duration)
+
+
+pitchClassToString : PitchClass -> String
+pitchClassToString (PitchClass letterName accidental) =
+    letterNameToString letterName ++ accidentalToString accidental
+
+
+letterNameToString : LetterName -> String
+letterNameToString letterName =
+    case letterName of
+        C ->
+            "C"
+
+        D ->
+            "D"
+
+        E ->
+            "E"
+
+        F ->
+            "F"
+
+        G ->
+            "G"
+
+        A ->
+            "A"
+
+        B ->
+            "B"
+
+
+accidentalToString : Accidental -> String
+accidentalToString accidental =
+    case accidental of
+        Natural ->
+            "♮"
+
+        Sharp ->
+            "♯"
+
+        Flat ->
+            "♭"
+
+        DoubleSharp ->
+            "𝄪"
+
+        DoubleFlat ->
+            "𝄫"
+
+        TripleSharp ->
+            "𝄪♯"
+
+        TripleFlat ->
+            "𝄫♭"
+
+
+octaveToString : Octave -> String
+octaveToString octave =
+    case octave of
+        Octave0 ->
+            "0"
+
+        Octave1 ->
+            "1"
+
+        Octave2 ->
+            "2"
+
+        Octave3 ->
+            "3"
+
+        Octave4 ->
+            "4"
+
+        Octave5 ->
+            "5"
+
+        Octave6 ->
+            "6"
+
+        Octave7 ->
+            "7"
+
+        Octave8 ->
+            "8"
+
+        Octave9 ->
+            "9"
+
+
+durationToString : Duration -> String
+durationToString (Duration value modifier) =
+    let
+        rhythm =
+            case value of
+                WholeNote ->
+                    "whole"
+
+                HalfNote ->
+                    "half"
+
+                QuarterNote ->
+                    "quarter"
+
+                EighthNote ->
+                    "eigth"
+
+                SixteenthNote ->
+                    "sixteenth"
+
+                ThirtySecondNote ->
+                    "thirty-second"
+
+        prefix =
+            case modifier of
+                Normal ->
+                    ""
+
+                Dotted ->
+                    "dotted "
+
+                DoubleDotted ->
+                    "double-dotted "
+    in
+        prefix ++ rhythm

@@ -17,7 +17,7 @@ suite =
                         cMajorSeven =
                             chord (note F Sharp) MajorSeven
                     in
-                        Expect.listsEqual
+                        Expect.noteListsEqual
                             (chordNotes cMajorSeven)
                             [ note F Sharp
                             , note A Sharp

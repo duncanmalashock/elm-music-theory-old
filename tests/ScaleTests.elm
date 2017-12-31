@@ -26,6 +26,6 @@ suite =
                             , note E Sharp
                             ]
                     in
-                        Expect.listsEqual notes expectedNotes
+                        Expect.noteListsEqual notes expectedNotes
             ]
         ]

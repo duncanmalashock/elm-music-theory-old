@@ -6,6 +6,7 @@ module Key
         , keysForChord
         , chordAtDegree
         , accidentalsInKey
+        , toString
         )
 
 import Note exposing (Note, LetterName(..), Accidental(..), note)
@@ -178,3 +179,13 @@ chordAtDegree key degree =
                             DominantSeven
             in
                 chord root chordQuality
+
+
+toString : Key -> String
+toString key =
+    case key of
+        MajorKey root ->
+            Note.toString root ++ " major"
+
+        MinorKey root ->
+            Note.toString root ++ " minor"
