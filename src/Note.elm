@@ -4,9 +4,9 @@ module Note
         , note
         , noteWithOctave
         , noteWithOctaveAndDuration
-        , pitchClassFromNote
-        , letterNameFromNote
-        , accidentalFromNote
+        , pitchClass
+        , letterName
+        , accidental
         , toString
         )
 
@@ -58,74 +58,69 @@ type RhythmicModifier
 
 note : LetterName -> Accidental -> Note
 note letterName accidental =
-    Note <| pitchClass letterName accidental
-
-
-pitchClass : LetterName -> Accidental -> PitchClass
-pitchClass letterName accidental =
-    pitchClass letterName accidental
+    Note <| PitchClass.pitchClass letterName accidental
 
 
 noteWithOctave : LetterName -> Accidental -> Octave -> Note
 noteWithOctave letterName accidental octave =
-    NoteWithOctave (pitchClass letterName accidental) octave
+    NoteWithOctave (PitchClass.pitchClass letterName accidental) octave
 
 
 noteWithOctaveAndDuration : LetterName -> Accidental -> Octave -> Duration -> Note
 noteWithOctaveAndDuration letterName accidental octave duration =
-    NoteWithOctaveAndDuration (pitchClass letterName accidental) octave duration
+    NoteWithOctaveAndDuration (PitchClass.pitchClass letterName accidental) octave duration
 
 
-letterNameFromNote : Note -> LetterName
-letterNameFromNote note =
+letterName : Note -> LetterName
+letterName note =
     case note of
-        Note pitchClass ->
-            PitchClass.letterName pitchClass
+        Note myPitchClass ->
+            PitchClass.letterName myPitchClass
 
-        NoteWithOctave pitchClass _ ->
-            PitchClass.letterName pitchClass
+        NoteWithOctave myPitchClass _ ->
+            PitchClass.letterName myPitchClass
 
-        NoteWithOctaveAndDuration pitchClass _ _ ->
-            PitchClass.letterName pitchClass
+        NoteWithOctaveAndDuration myPitchClass _ _ ->
+            PitchClass.letterName myPitchClass
 
 
-accidentalFromNote : Note -> Accidental
-accidentalFromNote note =
+accidental : Note -> Accidental
+accidental note =
     case note of
-        Note pitchClass ->
-            PitchClass.accidental pitchClass
+        Note myPitchClass ->
+            PitchClass.accidental myPitchClass
 
-        NoteWithOctave pitchClass _ ->
-            PitchClass.accidental pitchClass
+        NoteWithOctave myPitchClass _ ->
+            PitchClass.accidental myPitchClass
 
-        NoteWithOctaveAndDuration pitchClass _ _ ->
-            PitchClass.accidental pitchClass
+        NoteWithOctaveAndDuration myPitchClass _ _ ->
+            PitchClass.accidental myPitchClass
 
 
-pitchClassFromNote : Note -> PitchClass
-pitchClassFromNote note =
+pitchClass : Note -> PitchClass
+pitchClass note =
     case note of
-        Note pitchClass ->
-            pitchClass
+        Note myPitchClass ->
+            myPitchClass
 
-        NoteWithOctave pitchClass _ ->
-            pitchClass
+        NoteWithOctave myPitchClass _ ->
+            myPitchClass
 
-        NoteWithOctaveAndDuration pitchClass _ _ ->
-            pitchClass
+        NoteWithOctaveAndDuration myPitchClass _ _ ->
+            myPitchClass
 
 
 toString : Note -> String
 toString note =
     case note of
-        Note pitchClass ->
-            PitchClass.toString pitchClass
+        Note myPitchClass ->
+            PitchClass.toString myPitchClass
 
-        NoteWithOctave pitchClass octave ->
-            PitchClass.toString pitchClass ++ octaveToString octave
+        NoteWithOctave myPitchClass octave ->
+            PitchClass.toString myPitchClass ++ octaveToString octave
 
-        NoteWithOctaveAndDuration pitchClass octave duration ->
-            PitchClass.toString pitchClass ++ octaveToString octave ++ " " ++ (durationToString duration)
+        NoteWithOctaveAndDuration myPitchClass octave duration ->
+            PitchClass.toString myPitchClass ++ octaveToString octave ++ " " ++ (durationToString duration)
 
 
 octaveToString : Octave -> String
