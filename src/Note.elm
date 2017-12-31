@@ -201,7 +201,7 @@ accidentalToString : Accidental -> String
 accidentalToString accidental =
     case accidental of
         Natural ->
-            "♮"
+            ""
 
         Sharp ->
             "♯"
