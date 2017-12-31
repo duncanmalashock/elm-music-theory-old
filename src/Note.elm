@@ -1,20 +1,22 @@
 module Note
     exposing
         ( Note
-        , PitchClass
-        , LetterName(..)
-        , Accidental(..)
         , note
         , noteWithOctave
         , noteWithOctaveAndDuration
-        , isNatural
         , pitchClassFromNote
         , letterNameFromNote
         , accidentalFromNote
-        , pitchClass
+        , toString
+        )
+
+import PitchClass
+    exposing
+        ( PitchClass
+        , LetterName(..)
+        , Accidental(..)
         , letterNameFromPitchClass
         , accidentalFromPitchClass
-        , toString
         )
 
 
@@ -22,30 +24,6 @@ type Note
     = Note PitchClass
     | NoteWithOctave PitchClass Octave
     | NoteWithOctaveAndDuration PitchClass Octave Duration
-
-
-type PitchClass
-    = PitchClass LetterName Accidental
-
-
-type LetterName
-    = C
-    | D
-    | E
-    | F
-    | G
-    | A
-    | B
-
-
-type Accidental
-    = Natural
-    | Sharp
-    | Flat
-    | DoubleSharp
-    | DoubleFlat
-    | TripleSharp
-    | TripleFlat
 
 
 type Octave
@@ -82,22 +60,22 @@ type RhythmicModifier
 
 note : LetterName -> Accidental -> Note
 note letterName accidental =
-    Note (PitchClass letterName accidental)
+    Note <| pitchClass letterName accidental
 
 
 pitchClass : LetterName -> Accidental -> PitchClass
 pitchClass letterName accidental =
-    PitchClass letterName accidental
+    pitchClass letterName accidental
 
 
 noteWithOctave : LetterName -> Accidental -> Octave -> Note
 noteWithOctave letterName accidental octave =
-    NoteWithOctave (PitchClass letterName accidental) octave
+    NoteWithOctave (pitchClass letterName accidental) octave
 
 
 noteWithOctaveAndDuration : LetterName -> Accidental -> Octave -> Duration -> Note
 noteWithOctaveAndDuration letterName accidental octave duration =
-    NoteWithOctaveAndDuration (PitchClass letterName accidental) octave duration
+    NoteWithOctaveAndDuration (pitchClass letterName accidental) octave duration
 
 
 letterNameFromNote : Note -> LetterName
@@ -126,100 +104,30 @@ accidentalFromNote note =
             accidentalFromPitchClass pitchClass
 
 
-letterNameFromPitchClass : PitchClass -> LetterName
-letterNameFromPitchClass (PitchClass letterName _) =
-    letterName
-
-
-accidentalFromPitchClass : PitchClass -> Accidental
-accidentalFromPitchClass (PitchClass _ accidental) =
-    accidental
-
-
 pitchClassFromNote : Note -> PitchClass
 pitchClassFromNote note =
     case note of
-        Note (PitchClass letterName accidental) ->
-            pitchClass letterName accidental
+        Note pitchClass ->
+            pitchClass
 
-        NoteWithOctave (PitchClass letterName accidental) _ ->
-            pitchClass letterName accidental
+        NoteWithOctave pitchClass _ ->
+            pitchClass
 
-        NoteWithOctaveAndDuration (PitchClass letterName accidental) _ _ ->
-            pitchClass letterName accidental
-
-
-isNatural : Note -> Bool
-isNatural note =
-    accidentalFromNote note == Natural
+        NoteWithOctaveAndDuration pitchClass _ _ ->
+            pitchClass
 
 
 toString : Note -> String
 toString note =
     case note of
         Note pitchClass ->
-            pitchClassToString pitchClass
+            PitchClass.toString pitchClass
 
         NoteWithOctave pitchClass octave ->
-            pitchClassToString pitchClass ++ octaveToString octave
+            PitchClass.toString pitchClass ++ octaveToString octave
 
         NoteWithOctaveAndDuration pitchClass octave duration ->
-            pitchClassToString pitchClass ++ octaveToString octave ++ " " ++ (durationToString duration)
-
-
-pitchClassToString : PitchClass -> String
-pitchClassToString (PitchClass letterName accidental) =
-    letterNameToString letterName ++ accidentalToString accidental
-
-
-letterNameToString : LetterName -> String
-letterNameToString letterName =
-    case letterName of
-        C ->
-            "C"
-
-        D ->
-            "D"
-
-        E ->
-            "E"
-
-        F ->
-            "F"
-
-        G ->
-            "G"
-
-        A ->
-            "A"
-
-        B ->
-            "B"
-
-
-accidentalToString : Accidental -> String
-accidentalToString accidental =
-    case accidental of
-        Natural ->
-            ""
-
-        Sharp ->
-            "♯"
-
-        Flat ->
-            "♭"
-
-        DoubleSharp ->
-            "𝄪"
-
-        DoubleFlat ->
-            "𝄫"
-
-        TripleSharp ->
-            "𝄪♯"
-
-        TripleFlat ->
-            "𝄫♭"
+            PitchClass.toString pitchClass ++ octaveToString octave ++ " " ++ (durationToString duration)
 
 
 octaveToString : Octave -> String

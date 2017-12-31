@@ -1,10 +1,16 @@
-module Helpers exposing (noteListsEqual, keyListsEqual, chordListsEqual)
+module Helpers exposing (noteListsEqual, keyListsEqual, chordListsEqual, pitchClassListsEqual)
 
+import PitchClass exposing (PitchClass)
 import Note exposing (Note)
 import Key exposing (Key)
 import Chord exposing (Chord)
 import Set
 import Expect
+
+
+pitchClassListsEqual : List PitchClass -> List PitchClass -> Expect.Expectation
+pitchClassListsEqual listA listB =
+    listsEqual PitchClass.toString listA listB
 
 
 noteListsEqual : List Note -> List Note -> Expect.Expectation

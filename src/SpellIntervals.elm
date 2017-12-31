@@ -1,29 +1,32 @@
 module SpellIntervals exposing (getNoteAtIntervalFrom)
 
-import Note as Note
+import Note
     exposing
         ( Note
-        , PitchClass
-        , LetterName(..)
-        , Accidental(..)
         , note
-        , pitchClass
         , letterNameFromNote
         , accidentalFromNote
+        )
+import PitchClass
+    exposing
+        ( PitchClass
+        , LetterName(..)
+        , Accidental(..)
+        , pitchClass
         , letterNameFromPitchClass
         , accidentalFromPitchClass
         )
 import Interval as Interval exposing (Interval(..))
 
 
-getNoteAtIntervalFrom : Note -> Interval -> Note
+getNoteAtIntervalFrom : PitchClass -> Interval -> PitchClass
 getNoteAtIntervalFrom theNote interval =
     let
         startingLetterName =
-            letterNameFromNote theNote
+            letterNameFromPitchClass theNote
 
         startingAccidental =
-            accidentalFromNote theNote
+            accidentalFromPitchClass theNote
 
         newLetterName =
             letterNameAtIntervalFrom startingLetterName interval
@@ -53,7 +56,7 @@ getNoteAtIntervalFrom theNote interval =
         newAccidental =
             semitonesToAccidental differenceWithoutAccidental
     in
-        note newLetterName newAccidental
+        pitchClass newLetterName newAccidental
 
 
 letterNameAtIntervalFrom : LetterName -> Interval -> LetterName

@@ -9,12 +9,12 @@ module Chord
         )
 
 import Scale exposing (Scale(..))
-import Note exposing (Note, LetterName(..), Accidental(..))
+import PitchClass exposing (PitchClass)
 import SpellIntervals as SpellIntervals exposing (getNoteAtIntervalFrom)
 
 
 type Chord
-    = Chord Note ChordQuality
+    = Chord PitchClass ChordQuality
 
 
 type ChordQuality
@@ -24,12 +24,12 @@ type ChordQuality
     | MinorSevenFlatFive
 
 
-isChordTone : Chord -> Note -> Bool
+isChordTone : Chord -> PitchClass -> Bool
 isChordTone theChord note =
     List.member note (chordNotes theChord)
 
 
-seventhChordNotes : Scale -> List Note
+seventhChordNotes : Scale -> List PitchClass
 seventhChordNotes (HeptatonicScale root scale) =
     [ scale.first
     , scale.third
@@ -39,7 +39,7 @@ seventhChordNotes (HeptatonicScale root scale) =
         |> List.map (getNoteAtIntervalFrom root)
 
 
-rootFromChord : Chord -> Note
+rootFromChord : Chord -> PitchClass
 rootFromChord chord =
     case chord of
         Chord root _ ->
@@ -53,12 +53,12 @@ qualityFromChord chord =
             quality
 
 
-chord : Note -> ChordQuality -> Chord
+chord : PitchClass -> ChordQuality -> Chord
 chord root quality =
     Chord root quality
 
 
-chordNotes : Chord -> List Note
+chordNotes : Chord -> List PitchClass
 chordNotes chord =
     let
         root =
@@ -83,7 +83,7 @@ chordNotes chord =
 
 toString : Chord -> String
 toString (Chord root quality) =
-    Note.toString root ++ qualityToString quality
+    PitchClass.toString root ++ qualityToString quality
 
 
 qualityToString : ChordQuality -> String

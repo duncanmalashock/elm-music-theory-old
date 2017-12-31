@@ -9,7 +9,7 @@ module Key
         , toString
         )
 
-import Note exposing (Note, LetterName(..), Accidental(..), note)
+import PitchClass exposing (PitchClass, LetterName(..), Accidental(..), pitchClass)
 import Chord exposing (Chord, ChordQuality(..), chord)
 import Scale exposing (HeptatonicScaleIntervals)
 import Interval exposing (Interval)
@@ -17,8 +17,8 @@ import SpellIntervals
 
 
 type Key
-    = MajorKey Note
-    | MinorKey Note
+    = MajorKey PitchClass
+    | MinorKey PitchClass
 
 
 type Degree
@@ -33,36 +33,36 @@ type Degree
 
 allKeys : List Key
 allKeys =
-    [ MajorKey <| note C Natural
-    , MinorKey <| note A Natural
-    , MajorKey <| note F Natural
-    , MinorKey <| note D Natural
-    , MajorKey <| note B Flat
-    , MinorKey <| note G Natural
-    , MajorKey <| note E Flat
-    , MinorKey <| note C Natural
-    , MajorKey <| note A Flat
-    , MinorKey <| note F Natural
-    , MajorKey <| note D Flat
-    , MinorKey <| note B Flat
-    , MajorKey <| note G Flat
-    , MinorKey <| note E Flat
-    , MajorKey <| note G Natural
-    , MinorKey <| note E Natural
-    , MajorKey <| note D Natural
-    , MinorKey <| note B Natural
-    , MajorKey <| note A Natural
-    , MinorKey <| note F Sharp
-    , MajorKey <| note E Natural
-    , MinorKey <| note C Sharp
-    , MajorKey <| note B Natural
-    , MinorKey <| note G Sharp
-    , MajorKey <| note F Sharp
-    , MinorKey <| note D Sharp
+    [ MajorKey <| pitchClass C Natural
+    , MinorKey <| pitchClass A Natural
+    , MajorKey <| pitchClass F Natural
+    , MinorKey <| pitchClass D Natural
+    , MajorKey <| pitchClass B Flat
+    , MinorKey <| pitchClass G Natural
+    , MajorKey <| pitchClass E Flat
+    , MinorKey <| pitchClass C Natural
+    , MajorKey <| pitchClass A Flat
+    , MinorKey <| pitchClass F Natural
+    , MajorKey <| pitchClass D Flat
+    , MinorKey <| pitchClass B Flat
+    , MajorKey <| pitchClass G Flat
+    , MinorKey <| pitchClass E Flat
+    , MajorKey <| pitchClass G Natural
+    , MinorKey <| pitchClass E Natural
+    , MajorKey <| pitchClass D Natural
+    , MinorKey <| pitchClass B Natural
+    , MajorKey <| pitchClass A Natural
+    , MinorKey <| pitchClass F Sharp
+    , MajorKey <| pitchClass E Natural
+    , MinorKey <| pitchClass C Sharp
+    , MajorKey <| pitchClass B Natural
+    , MinorKey <| pitchClass G Sharp
+    , MajorKey <| pitchClass F Sharp
+    , MinorKey <| pitchClass D Sharp
     ]
 
 
-accidentalsInKey : Key -> List Note
+accidentalsInKey : Key -> List PitchClass
 accidentalsInKey key =
     let
         notes =
@@ -73,7 +73,7 @@ accidentalsInKey key =
                 MinorKey tonic ->
                     Scale.notesInScale <| Scale.HeptatonicScale tonic (Scale.minor)
     in
-        List.filter (\note -> not <| Note.isNatural note) notes
+        List.filter (\note -> not <| PitchClass.isNatural note) notes
 
 
 isInKey : Key -> Chord -> Bool
@@ -185,7 +185,7 @@ toString : Key -> String
 toString key =
     case key of
         MajorKey root ->
-            Note.toString root ++ " major"
+            PitchClass.toString root ++ " major"
 
         MinorKey root ->
-            Note.toString root ++ " minor"
+            PitchClass.toString root ++ " minor"

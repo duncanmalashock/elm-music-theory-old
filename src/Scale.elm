@@ -15,9 +15,9 @@ module Scale
         , HeptatonicScaleIntervals
         )
 
-import SpellIntervals as SpellIntervals exposing (getNoteAtIntervalFrom)
-import Note as Note exposing (Note)
-import Interval as Interval
+import SpellIntervals exposing (getNoteAtIntervalFrom)
+import PitchClass exposing (PitchClass)
+import Interval
     exposing
         ( Interval(..)
         , IntervalName(..)
@@ -26,7 +26,7 @@ import Interval as Interval
 
 
 type Scale
-    = HeptatonicScale Note HeptatonicScaleIntervals
+    = HeptatonicScale PitchClass HeptatonicScaleIntervals
 
 
 type alias HeptatonicScaleIntervals =
@@ -134,12 +134,12 @@ locrian =
     }
 
 
-isInScale : Note -> Scale -> Bool
-isInScale note scale =
-    List.member note (notesInScale scale)
+isInScale : PitchClass -> Scale -> Bool
+isInScale pitchClass scale =
+    List.member pitchClass (notesInScale scale)
 
 
-notesInScale : Scale -> List Note
+notesInScale : Scale -> List PitchClass
 notesInScale (HeptatonicScale root scaleIntervals) =
     List.map (getNoteAtIntervalFrom root) <| listFromHeptatonicScale scaleIntervals
 
