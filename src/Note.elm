@@ -1,7 +1,6 @@
 module Note
     exposing
         ( Note
-        , note
         , noteWithOctave
         , noteWithOctaveAndDuration
         , pitchClass
@@ -19,8 +18,7 @@ import PitchClass
 
 
 type Note
-    = Note PitchClass
-    | NoteWithOctave PitchClass Octave
+    = NoteWithOctave PitchClass Octave
     | NoteWithOctaveAndDuration PitchClass Octave Duration
 
 
@@ -56,11 +54,6 @@ type RhythmicModifier
     | DoubleDotted
 
 
-note : LetterName -> Accidental -> Note
-note letterName accidental =
-    Note <| PitchClass.pitchClass letterName accidental
-
-
 noteWithOctave : LetterName -> Accidental -> Octave -> Note
 noteWithOctave letterName accidental octave =
     NoteWithOctave (PitchClass.pitchClass letterName accidental) octave
@@ -74,9 +67,6 @@ noteWithOctaveAndDuration letterName accidental octave duration =
 letterName : Note -> LetterName
 letterName note =
     case note of
-        Note myPitchClass ->
-            PitchClass.letterName myPitchClass
-
         NoteWithOctave myPitchClass _ ->
             PitchClass.letterName myPitchClass
 
@@ -87,9 +77,6 @@ letterName note =
 accidental : Note -> Accidental
 accidental note =
     case note of
-        Note myPitchClass ->
-            PitchClass.accidental myPitchClass
-
         NoteWithOctave myPitchClass _ ->
             PitchClass.accidental myPitchClass
 
@@ -100,9 +87,6 @@ accidental note =
 pitchClass : Note -> PitchClass
 pitchClass note =
     case note of
-        Note myPitchClass ->
-            myPitchClass
-
         NoteWithOctave myPitchClass _ ->
             myPitchClass
 
@@ -113,9 +97,6 @@ pitchClass note =
 toString : Note -> String
 toString note =
     case note of
-        Note myPitchClass ->
-            PitchClass.toString myPitchClass
-
         NoteWithOctave myPitchClass octave ->
             PitchClass.toString myPitchClass ++ octaveToString octave
 
