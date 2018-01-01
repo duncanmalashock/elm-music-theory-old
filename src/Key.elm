@@ -6,13 +6,14 @@ module Key
         , allKeys
         , Degree(..)
         , keysForChord
+        , triadChordAtDegree
         , seventhChordAtDegree
         , accidentals
         , toString
         )
 
 import PitchClass exposing (PitchClass, LetterName(..), Accidental(..), pitchClass)
-import Chord exposing (Chord, SeventhQuality(..))
+import Chord exposing (Chord, TriadQuality(..), SeventhQuality(..))
 import Scale exposing (HeptatonicScaleIntervals)
 import Interval exposing (Interval)
 import SpellIntervals
@@ -129,6 +130,76 @@ degreeToHeptatonicScaleInterval scaleIntervals degree =
 
         VII ->
             scaleIntervals.seventh
+
+
+triadChordAtDegree : Key -> Degree -> Chord
+triadChordAtDegree key degree =
+    case key of
+        MajorKey tonic ->
+            let
+                intervals =
+                    Scale.major
+
+                root =
+                    SpellIntervals.getPitchClassAtIntervalFrom tonic (degreeToHeptatonicScaleInterval intervals degree)
+
+                chordQuality =
+                    case degree of
+                        I ->
+                            Major
+
+                        II ->
+                            Minor
+
+                        III ->
+                            Minor
+
+                        IV ->
+                            Major
+
+                        V ->
+                            Major
+
+                        VI ->
+                            Minor
+
+                        VII ->
+                            Diminished
+            in
+                Chord.triadFromPitchClass root chordQuality
+
+        MinorKey tonic ->
+            let
+                intervals =
+                    Scale.minor
+
+                root =
+                    SpellIntervals.getPitchClassAtIntervalFrom tonic (degreeToHeptatonicScaleInterval intervals degree)
+
+                chordQuality =
+                    case degree of
+                        I ->
+                            Minor
+
+                        II ->
+                            Diminished
+
+                        III ->
+                            Major
+
+                        IV ->
+                            Minor
+
+                        V ->
+                            Minor
+
+                        VI ->
+                            Major
+
+                        VII ->
+                            Major
+            in
+                Chord.triadFromPitchClass root chordQuality
 
 
 seventhChordAtDegree : Key -> Degree -> Chord

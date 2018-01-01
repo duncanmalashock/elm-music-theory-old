@@ -1,7 +1,7 @@
 module KeyTests exposing (suite)
 
 import PitchClass exposing (PitchClass, LetterName(..), Accidental(..), pitchClass)
-import Chord exposing (Chord, SeventhQuality(..))
+import Chord exposing (Chord, TriadQuality(..), SeventhQuality(..))
 import Key exposing (Key, Degree(..), majorKey, minorKey)
 import Test exposing (..)
 import Helpers as Expect
@@ -10,8 +10,36 @@ import Helpers as Expect
 suite : Test
 suite =
     describe "Key module"
-        [ describe "Key.chordAtDegree"
-            [ test "returns correct chords for the degrees" <|
+        [ describe "Key.triadChordAtDegree"
+            [ test "returns correct triad chords for the degrees" <|
+                \_ ->
+                    let
+                        cMajor =
+                            majorKey <| pitchClass C Natural
+
+                        chords =
+                            List.map (Key.triadChordAtDegree cMajor)
+                                [ I
+                                , II
+                                , III
+                                , IV
+                                , V
+                                , VI
+                                , VII
+                                ]
+                    in
+                        Expect.chordListsEqual chords
+                            [ Chord.triad C Natural Major
+                            , Chord.triad D Natural Minor
+                            , Chord.triad E Natural Minor
+                            , Chord.triad F Natural Major
+                            , Chord.triad G Natural Major
+                            , Chord.triad A Natural Minor
+                            , Chord.triad B Natural Diminished
+                            ]
+            ]
+        , describe "Key.seventhChordAtDegree"
+            [ test "returns correct seventh chords for the degrees" <|
                 \_ ->
                     let
                         dFlatMajor =
