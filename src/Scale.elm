@@ -1,14 +1,14 @@
 module Scale
     exposing
-        ( major
-        , minor
-        , lydian
-        , ionian
-        , mixolydian
-        , dorian
-        , aeolian
-        , phrygian
-        , locrian
+        ( majorIntervals
+        , minorIntervals
+        , lydianIntervals
+        , ionianIntervals
+        , mixolydianIntervals
+        , dorianIntervals
+        , aeolianIntervals
+        , phrygianIntervals
+        , locrianIntervals
         , pitchClassesInScale
         , isInScale
         , Scale(..)
@@ -40,18 +40,18 @@ type alias HeptatonicScaleIntervals =
     }
 
 
-major : HeptatonicScaleIntervals
-major =
-    ionian
+majorIntervals : HeptatonicScaleIntervals
+majorIntervals =
+    ionianIntervals
 
 
-minor : HeptatonicScaleIntervals
-minor =
-    aeolian
+minorIntervals : HeptatonicScaleIntervals
+minorIntervals =
+    aeolianIntervals
 
 
-lydian : HeptatonicScaleIntervals
-lydian =
+lydianIntervals : HeptatonicScaleIntervals
+lydianIntervals =
     { first = interval PerfectUnison
     , second = interval MajorSecond
     , third = interval MajorThird
@@ -62,8 +62,8 @@ lydian =
     }
 
 
-ionian : HeptatonicScaleIntervals
-ionian =
+ionianIntervals : HeptatonicScaleIntervals
+ionianIntervals =
     { first = interval PerfectUnison
     , second = interval MajorSecond
     , third = interval MajorThird
@@ -74,8 +74,8 @@ ionian =
     }
 
 
-mixolydian : HeptatonicScaleIntervals
-mixolydian =
+mixolydianIntervals : HeptatonicScaleIntervals
+mixolydianIntervals =
     { first = interval PerfectUnison
     , second = interval MajorSecond
     , third = interval MajorThird
@@ -86,8 +86,8 @@ mixolydian =
     }
 
 
-dorian : HeptatonicScaleIntervals
-dorian =
+dorianIntervals : HeptatonicScaleIntervals
+dorianIntervals =
     { first = interval PerfectUnison
     , second = interval MajorSecond
     , third = interval MinorThird
@@ -98,8 +98,8 @@ dorian =
     }
 
 
-aeolian : HeptatonicScaleIntervals
-aeolian =
+aeolianIntervals : HeptatonicScaleIntervals
+aeolianIntervals =
     { first = interval PerfectUnison
     , second = interval MajorSecond
     , third = interval MinorThird
@@ -110,8 +110,8 @@ aeolian =
     }
 
 
-phrygian : HeptatonicScaleIntervals
-phrygian =
+phrygianIntervals : HeptatonicScaleIntervals
+phrygianIntervals =
     { first = interval PerfectUnison
     , second = interval MinorSecond
     , third = interval MinorThird
@@ -122,8 +122,8 @@ phrygian =
     }
 
 
-locrian : HeptatonicScaleIntervals
-locrian =
+locrianIntervals : HeptatonicScaleIntervals
+locrianIntervals =
     { first = interval PerfectUnison
     , second = interval MinorSecond
     , third = interval MinorThird

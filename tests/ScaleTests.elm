@@ -1,7 +1,7 @@
 module ScaleTests exposing (suite)
 
 import PitchClass exposing (LetterName(..), Accidental(..), pitchClass)
-import Scale exposing (Scale(..), major)
+import Scale exposing (Scale(..))
 import Test exposing (..)
 import Helpers as Expect
 
@@ -14,7 +14,7 @@ suite =
                 \_ ->
                     let
                         notes =
-                            Scale.pitchClassesInScale (HeptatonicScale (pitchClass F Sharp) major)
+                            Scale.pitchClassesInScale (HeptatonicScale (pitchClass F Sharp) Scale.majorIntervals)
 
                         expectedNotes =
                             [ pitchClass F Sharp

@@ -80,15 +80,19 @@ allKeys =
 accidentals : Key -> List PitchClass
 accidentals key =
     let
-        notes =
-            case key of
-                MajorKey tonic ->
-                    Scale.pitchClassesInScale <| Scale.HeptatonicScale tonic (Scale.major)
+        pitchClasses =
+            let
+                ( tonic, intervals ) =
+                    case key of
+                        MajorKey tonic ->
+                            ( tonic, Scale.majorIntervals )
 
-                MinorKey tonic ->
-                    Scale.pitchClassesInScale <| Scale.HeptatonicScale tonic (Scale.minor)
+                        MinorKey tonic ->
+                            ( tonic, Scale.minorIntervals )
+            in
+                Scale.pitchClassesInScale <| Scale.HeptatonicScale tonic intervals
     in
-        List.filter (\note -> not <| PitchClass.isNatural note) notes
+        List.filter (\pc -> not <| PitchClass.isNatural pc) pitchClasses
 
 
 toString : Key -> String

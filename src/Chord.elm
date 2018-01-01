@@ -106,30 +106,30 @@ pitchClasses chord =
                 Seventh root quality ->
                     case quality of
                         MajorSeven ->
-                            HeptatonicScale root Scale.major
+                            HeptatonicScale root Scale.majorIntervals
 
                         MinorSeven ->
-                            HeptatonicScale root Scale.dorian
+                            HeptatonicScale root Scale.dorianIntervals
 
                         DominantSeven ->
-                            HeptatonicScale root Scale.mixolydian
+                            HeptatonicScale root Scale.mixolydianIntervals
 
                         MinorSevenFlatFive ->
-                            HeptatonicScale root Scale.locrian
+                            HeptatonicScale root Scale.locrianIntervals
 
                 Triad root quality ->
                     case quality of
                         Major ->
-                            HeptatonicScale root Scale.major
+                            HeptatonicScale root Scale.majorIntervals
 
                         Minor ->
-                            HeptatonicScale root Scale.minor
+                            HeptatonicScale root Scale.minorIntervals
 
                         Diminished ->
-                            HeptatonicScale root Scale.locrian
+                            HeptatonicScale root Scale.locrianIntervals
 
                         Augmented ->
-                            HeptatonicScale root Scale.major
+                            HeptatonicScale root Scale.majorIntervals
     in
         notesFn scale
 

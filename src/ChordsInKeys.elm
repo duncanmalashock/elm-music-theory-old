@@ -58,7 +58,7 @@ triadChordAtDegree key degree =
         MajorKey tonic ->
             let
                 intervals =
-                    Scale.major
+                    Scale.majorIntervals
 
                 root =
                     SpellIntervals.getPitchClassAtIntervalFrom tonic (degreeToHeptatonicScaleInterval intervals degree)
@@ -91,7 +91,7 @@ triadChordAtDegree key degree =
         MinorKey tonic ->
             let
                 intervals =
-                    Scale.minor
+                    Scale.minorIntervals
 
                 root =
                     SpellIntervals.getPitchClassAtIntervalFrom tonic (degreeToHeptatonicScaleInterval intervals degree)
@@ -128,7 +128,7 @@ seventhChordAtDegree key degree =
         MajorKey tonic ->
             let
                 intervals =
-                    Scale.major
+                    Scale.majorIntervals
 
                 root =
                     SpellIntervals.getPitchClassAtIntervalFrom tonic (degreeToHeptatonicScaleInterval intervals degree)
@@ -161,7 +161,7 @@ seventhChordAtDegree key degree =
         MinorKey tonic ->
             let
                 intervals =
-                    Scale.minor
+                    Scale.minorIntervals
 
                 root =
                     SpellIntervals.getPitchClassAtIntervalFrom tonic (degreeToHeptatonicScaleInterval intervals degree)
