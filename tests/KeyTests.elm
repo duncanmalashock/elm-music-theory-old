@@ -1,7 +1,7 @@
 module KeyTests exposing (suite)
 
 import PitchClass exposing (PitchClass, LetterName(..), Accidental(..), pitchClass)
-import Chord exposing (Chord, ChordQuality(..), chord)
+import Chord exposing (Chord, SeventhQuality(..))
 import Key exposing (Key, Degree(..), majorKey, minorKey)
 import Test exposing (..)
 import Helpers as Expect
@@ -18,7 +18,7 @@ suite =
                             majorKey <| pitchClass D Flat
 
                         chords =
-                            List.map (Key.chordAtDegree dFlatMajor)
+                            List.map (Key.seventhChordAtDegree dFlatMajor)
                                 [ I
                                 , II
                                 , III
@@ -29,13 +29,13 @@ suite =
                                 ]
                     in
                         Expect.chordListsEqual chords
-                            [ chord D Flat MajorSeven
-                            , chord E Flat MinorSeven
-                            , chord F Natural MinorSeven
-                            , chord G Flat MajorSeven
-                            , chord A Flat DominantSeven
-                            , chord B Flat MinorSeven
-                            , chord C Natural MinorSevenFlatFive
+                            [ Chord.seventh D Flat MajorSeven
+                            , Chord.seventh E Flat MinorSeven
+                            , Chord.seventh F Natural MinorSeven
+                            , Chord.seventh G Flat MajorSeven
+                            , Chord.seventh A Flat DominantSeven
+                            , Chord.seventh B Flat MinorSeven
+                            , Chord.seventh C Natural MinorSevenFlatFive
                             ]
             ]
         , describe "Key.keysForChord"
@@ -43,7 +43,7 @@ suite =
                 \_ ->
                     let
                         keys =
-                            chord C Natural MajorSeven
+                            Chord.seventh C Natural MajorSeven
                                 |> Key.keysForChord
                     in
                         Expect.keyListsEqual

@@ -1,6 +1,6 @@
 module ChordTests exposing (suite)
 
-import Chord exposing (Chord, ChordQuality(..), chord)
+import Chord exposing (Chord, SeventhQuality(..))
 import PitchClass exposing (PitchClass, LetterName(..), Accidental(..), pitchClass)
 import Test exposing (..)
 import Expect
@@ -15,7 +15,7 @@ suite =
                 \_ ->
                     let
                         cMajorSeven =
-                            chord F Sharp MajorSeven
+                            Chord.seventh F Sharp MajorSeven
                     in
                         Expect.pitchClassListsEqual
                             (Chord.pitchClasses cMajorSeven)
@@ -30,7 +30,7 @@ suite =
                 \_ ->
                     let
                         cMajorSeven =
-                            chord F Sharp MajorSeven
+                            Chord.seventh F Sharp MajorSeven
 
                         e =
                             pitchClass E Sharp

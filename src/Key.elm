@@ -6,13 +6,13 @@ module Key
         , allKeys
         , Degree(..)
         , keysForChord
-        , chordAtDegree
+        , seventhChordAtDegree
         , accidentals
         , toString
         )
 
 import PitchClass exposing (PitchClass, LetterName(..), Accidental(..), pitchClass)
-import Chord exposing (Chord, ChordQuality(..), chord, chordFromPitchClass)
+import Chord exposing (Chord, SeventhQuality(..))
 import Scale exposing (HeptatonicScaleIntervals)
 import Interval exposing (Interval)
 import SpellIntervals
@@ -98,7 +98,7 @@ accidentals key =
 
 isInKey : Key -> Chord -> Bool
 isInKey key chord =
-    List.member chord (List.map (chordAtDegree key) [ I, II, III, IV, V, VI, VII ])
+    List.member chord (List.map (seventhChordAtDegree key) [ I, II, III, IV, V, VI, VII ])
 
 
 keysForChord : Chord -> List Key
@@ -131,8 +131,8 @@ degreeToHeptatonicScaleInterval scaleIntervals degree =
             scaleIntervals.seventh
 
 
-chordAtDegree : Key -> Degree -> Chord
-chordAtDegree key degree =
+seventhChordAtDegree : Key -> Degree -> Chord
+seventhChordAtDegree key degree =
     case key of
         MajorKey tonic ->
             let
@@ -165,7 +165,7 @@ chordAtDegree key degree =
                         VII ->
                             MinorSevenFlatFive
             in
-                chordFromPitchClass root chordQuality
+                Chord.seventhFromPitchClass root chordQuality
 
         MinorKey tonic ->
             let
@@ -198,7 +198,7 @@ chordAtDegree key degree =
                         VII ->
                             DominantSeven
             in
-                chordFromPitchClass root chordQuality
+                Chord.seventhFromPitchClass root chordQuality
 
 
 toString : Key -> String

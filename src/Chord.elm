@@ -1,9 +1,12 @@
 module Chord
     exposing
         ( Chord
-        , ChordQuality(..)
-        , chord
-        , chordFromPitchClass
+        , TriadQuality(..)
+        , SeventhQuality(..)
+        , triad
+        , triadFromPitchClass
+        , seventh
+        , seventhFromPitchClass
         , isChordTone
         , pitchClasses
         , toString
@@ -15,10 +18,18 @@ import SpellIntervals
 
 
 type Chord
-    = Chord PitchClass ChordQuality
+    = Triad PitchClass TriadQuality
+    | Seventh PitchClass SeventhQuality
 
 
-type ChordQuality
+type TriadQuality
+    = Major
+    | Minor
+    | Diminished
+    | Augmented
+
+
+type SeventhQuality
     = MajorSeven
     | MinorSeven
     | DominantSeven
@@ -30,8 +41,17 @@ isChordTone theChord note =
     List.member note (pitchClasses theChord)
 
 
-seventhChordNotes : Scale -> List PitchClass
-seventhChordNotes (HeptatonicScale root scale) =
+triadNotes : Scale -> List PitchClass
+triadNotes (HeptatonicScale root scale) =
+    [ scale.first
+    , scale.third
+    , scale.fifth
+    ]
+        |> List.map (SpellIntervals.getPitchClassAtIntervalFrom root)
+
+
+seventhNotes : Scale -> List PitchClass
+seventhNotes (HeptatonicScale root scale) =
     [ scale.first
     , scale.third
     , scale.fifth
@@ -43,66 +63,116 @@ seventhChordNotes (HeptatonicScale root scale) =
 rootFromChord : Chord -> PitchClass
 rootFromChord chord =
     case chord of
-        Chord root _ ->
+        Triad root _ ->
+            root
+
+        Seventh root _ ->
             root
 
 
-qualityFromChord : Chord -> ChordQuality
-qualityFromChord chord =
-    case chord of
-        Chord _ quality ->
-            quality
+triad : LetterName -> Accidental -> TriadQuality -> Chord
+triad letterName accidental quality =
+    Triad (pitchClass letterName accidental) quality
 
 
-chord : LetterName -> Accidental -> ChordQuality -> Chord
-chord letterName accidental quality =
-    Chord (pitchClass letterName accidental) quality
+triadFromPitchClass : PitchClass -> TriadQuality -> Chord
+triadFromPitchClass root quality =
+    Triad root quality
 
 
-chordFromPitchClass : PitchClass -> ChordQuality -> Chord
-chordFromPitchClass root quality =
-    Chord root quality
+seventh : LetterName -> Accidental -> SeventhQuality -> Chord
+seventh letterName accidental quality =
+    Seventh (pitchClass letterName accidental) quality
+
+
+seventhFromPitchClass : PitchClass -> SeventhQuality -> Chord
+seventhFromPitchClass root quality =
+    Seventh root quality
 
 
 pitchClasses : Chord -> List PitchClass
 pitchClasses chord =
     let
-        root =
-            rootFromChord chord
+        notesFn =
+            case chord of
+                Triad pitchClass triadQuality ->
+                    triadNotes
+
+                Seventh pitchClass seventhQuality ->
+                    seventhNotes
 
         scale =
-            case qualityFromChord chord of
-                MajorSeven ->
-                    HeptatonicScale root Scale.major
+            case chord of
+                Seventh root quality ->
+                    case quality of
+                        MajorSeven ->
+                            HeptatonicScale root Scale.major
 
-                MinorSeven ->
-                    HeptatonicScale root Scale.dorian
+                        MinorSeven ->
+                            HeptatonicScale root Scale.dorian
 
-                DominantSeven ->
-                    HeptatonicScale root Scale.mixolydian
+                        DominantSeven ->
+                            HeptatonicScale root Scale.mixolydian
 
-                MinorSevenFlatFive ->
-                    HeptatonicScale root Scale.locrian
+                        MinorSevenFlatFive ->
+                            HeptatonicScale root Scale.locrian
+
+                Triad root quality ->
+                    case quality of
+                        Major ->
+                            HeptatonicScale root Scale.major
+
+                        Minor ->
+                            HeptatonicScale root Scale.minor
+
+                        Diminished ->
+                            HeptatonicScale root Scale.locrian
+
+                        Augmented ->
+                            HeptatonicScale root Scale.major
     in
-        seventhChordNotes scale
+        notesFn scale
 
 
 toString : Chord -> String
-toString (Chord root quality) =
-    PitchClass.toString root ++ qualityToString quality
+toString chord =
+    let
+        root =
+            case chord of
+                Triad root _ ->
+                    root
 
+                Seventh root _ ->
+                    root
 
-qualityToString : ChordQuality -> String
-qualityToString chordQuality =
-    case chordQuality of
-        MajorSeven ->
-            "Δ"
+        symbol =
+            case chord of
+                Triad _ triadQuality ->
+                    case triadQuality of
+                        Major ->
+                            "M"
 
-        MinorSeven ->
-            "-7"
+                        Minor ->
+                            "m"
 
-        DominantSeven ->
-            "7"
+                        Diminished ->
+                            "°"
 
-        MinorSevenFlatFive ->
-            "-7♭5"
+                        Augmented ->
+                            "+"
+
+                Seventh _ seventhQuality ->
+                    case seventhQuality of
+                        MajorSeven ->
+                            "Δ"
+
+                        MinorSeven ->
+                            "-7"
+
+                        DominantSeven ->
+                            "7"
+
+                        MinorSevenFlatFive ->
+                            "-7♭5"
+    in
+        PitchClass.toString root ++ symbol
