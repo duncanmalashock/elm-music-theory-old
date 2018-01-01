@@ -11,7 +11,7 @@ suite : Test
 suite =
     describe "Chord module"
         [ describe "Chord.pitchClasses"
-            [ test "returns the notes of a major seventh chord" <|
+            [ test "returns the pitch classes in a major seventh chord" <|
                 \_ ->
                     let
                         cMajorSeven =
@@ -24,7 +24,7 @@ suite =
                             , pitchClass C Sharp
                             , pitchClass E Sharp
                             ]
-            , test "returns the notes of an augmented chord" <|
+            , test "returns the pitch classes in an augmented chord" <|
                 \_ ->
                     let
                         cAugmented =
@@ -38,15 +38,15 @@ suite =
                             ]
             ]
         , describe "Chord.isChordTone"
-            [ test "returns whether the note is a chord tone" <|
+            [ test "returns whether the pitch class is a chord tone" <|
                 \_ ->
                     let
-                        cMajorSeven =
+                        fSharpMajorSeven =
                             Chord.seventh F Sharp MajorSeven
 
-                        e =
+                        eSharp =
                             pitchClass E Sharp
                     in
-                        Expect.equal (Chord.isChordTone cMajorSeven e) True
+                        Expect.equal (Chord.isChordTone fSharpMajorSeven eSharp) True
             ]
         ]
