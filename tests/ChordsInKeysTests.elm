@@ -4,7 +4,7 @@ import ChordsInKeys
 import Chord exposing (Chord, TriadQuality(..), SeventhQuality(..))
 import PitchClass exposing (PitchClass, LetterName(..), Accidental(..), pitchClass)
 import Key exposing (Key, majorKey, minorKey)
-import Scale exposing (HeptatonicScaleDegree(..))
+import Scale exposing (ScaleDegree(..))
 import Test exposing (..)
 import Helpers as Expect
 

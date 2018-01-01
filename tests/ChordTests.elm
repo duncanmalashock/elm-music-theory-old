@@ -1,6 +1,6 @@
 module ChordTests exposing (suite)
 
-import Chord exposing (Chord, SeventhQuality(..))
+import Chord exposing (Chord, TriadQuality(..), SeventhQuality(..))
 import PitchClass exposing (PitchClass, LetterName(..), Accidental(..), pitchClass)
 import Test exposing (..)
 import Expect
@@ -11,7 +11,7 @@ suite : Test
 suite =
     describe "Chord module"
         [ describe "Chord.pitchClasses"
-            [ test "returns the notes of a chord" <|
+            [ test "returns the notes of a major seventh chord" <|
                 \_ ->
                     let
                         cMajorSeven =
@@ -23,6 +23,18 @@ suite =
                             , pitchClass A Sharp
                             , pitchClass C Sharp
                             , pitchClass E Sharp
+                            ]
+            , test "returns the notes of an augmented chord" <|
+                \_ ->
+                    let
+                        cAugmented =
+                            Chord.triad C Natural Augmented
+                    in
+                        Expect.pitchClassListsEqual
+                            (Chord.pitchClasses cAugmented)
+                            [ pitchClass C Natural
+                            , pitchClass E Natural
+                            , pitchClass G Sharp
                             ]
             ]
         , describe "Chord.isChordTone"

@@ -7,7 +7,7 @@ module ChordsInKeys
 
 import Key exposing (Key(..))
 import Chord exposing (Chord(..), TriadQuality(..), SeventhQuality(..))
-import Scale exposing (HeptatonicScaleIntervals, HeptatonicScaleDegree(..))
+import Scale exposing (Scale, ScaleDegree(..))
 import Interval exposing (Interval)
 import SpellIntervals
 
@@ -27,41 +27,66 @@ keysForChord chord =
     List.filter (\k -> isInKey k chord) Key.allKeys
 
 
-degreeToHeptatonicScaleInterval : HeptatonicScaleIntervals -> HeptatonicScaleDegree -> Interval
-degreeToHeptatonicScaleInterval scaleIntervals degree =
-    case degree of
-        I ->
-            scaleIntervals.first
+degreeToScaleInterval : Scale -> ScaleDegree -> Interval
+degreeToScaleInterval scale degree =
+    case scale of
+        Scale.HexatonicScale _ intervals ->
+            case degree of
+                I ->
+                    intervals.first
 
-        II ->
-            scaleIntervals.second
+                II ->
+                    intervals.second
 
-        III ->
-            scaleIntervals.third
+                III ->
+                    intervals.third
 
-        IV ->
-            scaleIntervals.fourth
+                IV ->
+                    intervals.fourth
 
-        V ->
-            scaleIntervals.fifth
+                V ->
+                    intervals.fifth
 
-        VI ->
-            scaleIntervals.sixth
+                VI ->
+                    intervals.sixth
 
-        VII ->
-            scaleIntervals.seventh
+                VII ->
+                    intervals.first
+
+        Scale.HeptatonicScale _ intervals ->
+            case degree of
+                I ->
+                    intervals.first
+
+                II ->
+                    intervals.second
+
+                III ->
+                    intervals.third
+
+                IV ->
+                    intervals.fourth
+
+                V ->
+                    intervals.fifth
+
+                VI ->
+                    intervals.sixth
+
+                VII ->
+                    intervals.seventh
 
 
-triadChordAtDegree : Key -> HeptatonicScaleDegree -> Chord
+triadChordAtDegree : Key -> ScaleDegree -> Chord
 triadChordAtDegree key degree =
     case key of
         MajorKey tonic ->
             let
-                intervals =
-                    Scale.intervals <| Scale.major tonic
+                scale =
+                    Scale.major tonic
 
                 root =
-                    SpellIntervals.getPitchClassAtIntervalFrom tonic (degreeToHeptatonicScaleInterval intervals degree)
+                    SpellIntervals.getPitchClassAtIntervalFrom tonic (degreeToScaleInterval scale degree)
 
                 chordQuality =
                     case degree of
@@ -90,11 +115,11 @@ triadChordAtDegree key degree =
 
         MinorKey tonic ->
             let
-                intervals =
-                    Scale.intervals <| Scale.minor tonic
+                scale =
+                    Scale.minor tonic
 
                 root =
-                    SpellIntervals.getPitchClassAtIntervalFrom tonic (degreeToHeptatonicScaleInterval intervals degree)
+                    SpellIntervals.getPitchClassAtIntervalFrom tonic (degreeToScaleInterval scale degree)
 
                 chordQuality =
                     case degree of
@@ -122,16 +147,16 @@ triadChordAtDegree key degree =
                 Chord.triadFromPitchClass root chordQuality
 
 
-seventhChordAtDegree : Key -> HeptatonicScaleDegree -> Chord
+seventhChordAtDegree : Key -> ScaleDegree -> Chord
 seventhChordAtDegree key degree =
     case key of
         MajorKey tonic ->
             let
-                intervals =
-                    Scale.intervals <| Scale.major tonic
+                scale =
+                    Scale.major tonic
 
                 root =
-                    SpellIntervals.getPitchClassAtIntervalFrom tonic (degreeToHeptatonicScaleInterval intervals degree)
+                    SpellIntervals.getPitchClassAtIntervalFrom tonic (degreeToScaleInterval scale degree)
 
                 chordQuality =
                     case degree of
@@ -160,11 +185,11 @@ seventhChordAtDegree key degree =
 
         MinorKey tonic ->
             let
-                intervals =
-                    Scale.intervals <| Scale.minor tonic
+                scale =
+                    Scale.minor tonic
 
                 root =
-                    SpellIntervals.getPitchClassAtIntervalFrom tonic (degreeToHeptatonicScaleInterval intervals degree)
+                    SpellIntervals.getPitchClassAtIntervalFrom tonic (degreeToScaleInterval scale degree)
 
                 chordQuality =
                     case degree of

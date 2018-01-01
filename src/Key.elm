@@ -71,15 +71,15 @@ accidentals key =
     let
         pitchClasses =
             let
-                ( tonic, intervals ) =
+                scale =
                     case key of
                         MajorKey tonic ->
-                            ( tonic, Scale.intervals <| Scale.major tonic )
+                            Scale.major tonic
 
                         MinorKey tonic ->
-                            ( tonic, Scale.intervals <| Scale.minor tonic )
+                            Scale.minor tonic
             in
-                Scale.pitchClassesInScale <| Scale.HeptatonicScale tonic intervals
+                Scale.pitchClassesInScale scale
     in
         List.filter (\pc -> not <| PitchClass.isNatural pc) pitchClasses
 

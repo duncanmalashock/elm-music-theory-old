@@ -42,22 +42,53 @@ isChordTone theChord note =
 
 
 triadNotes : Scale -> List PitchClass
-triadNotes (HeptatonicScale root scale) =
-    [ scale.first
-    , scale.third
-    , scale.fifth
-    ]
-        |> List.map (SpellIntervals.getPitchClassAtIntervalFrom root)
+triadNotes scale =
+    let
+        ( root, intervals ) =
+            case scale of
+                HexatonicScale root scale ->
+                    ( root
+                    , [ scale.first
+                      , scale.third
+                      , scale.fifth
+                      ]
+                    )
+
+                HeptatonicScale root scale ->
+                    ( root
+                    , [ scale.first
+                      , scale.third
+                      , scale.fifth
+                      ]
+                    )
+    in
+        List.map (SpellIntervals.getPitchClassAtIntervalFrom root) intervals
 
 
 seventhNotes : Scale -> List PitchClass
-seventhNotes (HeptatonicScale root scale) =
-    [ scale.first
-    , scale.third
-    , scale.fifth
-    , scale.seventh
-    ]
-        |> List.map (SpellIntervals.getPitchClassAtIntervalFrom root)
+seventhNotes scale =
+    let
+        ( root, intervals ) =
+            case scale of
+                HexatonicScale root intervals ->
+                    ( root
+                    , [ intervals.first
+                      , intervals.third
+                      , intervals.fifth
+                      , intervals.first
+                      ]
+                    )
+
+                HeptatonicScale root intervals ->
+                    ( root
+                    , [ intervals.first
+                      , intervals.third
+                      , intervals.fifth
+                      , intervals.seventh
+                      ]
+                    )
+    in
+        List.map (SpellIntervals.getPitchClassAtIntervalFrom root) intervals
 
 
 rootFromChord : Chord -> PitchClass
@@ -129,7 +160,7 @@ pitchClasses chord =
                             Scale.locrian root
 
                         Augmented ->
-                            Scale.major root
+                            Scale.wholeTone root
     in
         notesFn scale
 
