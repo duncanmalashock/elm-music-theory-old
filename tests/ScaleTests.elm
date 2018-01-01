@@ -14,7 +14,7 @@ suite =
                 \_ ->
                     let
                         notes =
-                            Scale.pitchClassesInScale (HeptatonicScale (pitchClass F Sharp) Scale.majorIntervals)
+                            Scale.pitchClassesInScale <| Scale.major <| pitchClass F Sharp
 
                         expectedNotes =
                             [ pitchClass F Sharp

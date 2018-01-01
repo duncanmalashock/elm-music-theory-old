@@ -4,28 +4,17 @@ module Key
         , majorKey
         , minorKey
         , allKeys
-        , Degree(..)
         , accidentals
         , toString
         )
 
 import PitchClass exposing (PitchClass, LetterName(..), Accidental(..), pitchClass)
-import Scale exposing (HeptatonicScaleIntervals)
+import Scale
 
 
 type Key
     = MajorKey PitchClass
     | MinorKey PitchClass
-
-
-type Degree
-    = I
-    | II
-    | III
-    | IV
-    | V
-    | VI
-    | VII
 
 
 majorKey : PitchClass -> Key
@@ -85,10 +74,10 @@ accidentals key =
                 ( tonic, intervals ) =
                     case key of
                         MajorKey tonic ->
-                            ( tonic, Scale.majorIntervals )
+                            ( tonic, Scale.intervals <| Scale.major tonic )
 
                         MinorKey tonic ->
-                            ( tonic, Scale.minorIntervals )
+                            ( tonic, Scale.intervals <| Scale.minor tonic )
             in
                 Scale.pitchClassesInScale <| Scale.HeptatonicScale tonic intervals
     in

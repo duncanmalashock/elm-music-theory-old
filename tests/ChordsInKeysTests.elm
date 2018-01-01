@@ -3,7 +3,8 @@ module ChordsInKeysTests exposing (suite)
 import ChordsInKeys
 import Chord exposing (Chord, TriadQuality(..), SeventhQuality(..))
 import PitchClass exposing (PitchClass, LetterName(..), Accidental(..), pitchClass)
-import Key exposing (Key, Degree(..), majorKey, minorKey)
+import Key exposing (Key, majorKey, minorKey)
+import Scale exposing (HeptatonicScaleDegree(..))
 import Test exposing (..)
 import Helpers as Expect
 

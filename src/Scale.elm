@@ -1,17 +1,19 @@
 module Scale
     exposing
-        ( majorIntervals
-        , minorIntervals
-        , lydianIntervals
-        , ionianIntervals
-        , mixolydianIntervals
-        , dorianIntervals
-        , aeolianIntervals
-        , phrygianIntervals
-        , locrianIntervals
+        ( major
+        , minor
+        , intervals
+        , lydian
+        , ionian
+        , mixolydian
+        , dorian
+        , aeolian
+        , phrygian
+        , locrian
         , pitchClassesInScale
         , isInScale
         , Scale(..)
+        , HeptatonicScaleDegree(..)
         , HeptatonicScaleIntervals
         )
 
@@ -29,6 +31,16 @@ type Scale
     = HeptatonicScale PitchClass HeptatonicScaleIntervals
 
 
+type HeptatonicScaleDegree
+    = I
+    | II
+    | III
+    | IV
+    | V
+    | VI
+    | VII
+
+
 type alias HeptatonicScaleIntervals =
     { first : Interval
     , second : Interval
@@ -40,98 +52,112 @@ type alias HeptatonicScaleIntervals =
     }
 
 
-majorIntervals : HeptatonicScaleIntervals
-majorIntervals =
-    ionianIntervals
+major : PitchClass -> Scale
+major root =
+    ionian root
 
 
-minorIntervals : HeptatonicScaleIntervals
-minorIntervals =
-    aeolianIntervals
+minor : PitchClass -> Scale
+minor root =
+    aeolian root
 
 
-lydianIntervals : HeptatonicScaleIntervals
-lydianIntervals =
-    { first = interval PerfectUnison
-    , second = interval MajorSecond
-    , third = interval MajorThird
-    , fourth = interval AugmentedFourth
-    , fifth = interval PerfectFifth
-    , sixth = interval MajorSixth
-    , seventh = interval MajorSeventh
-    }
+intervals : Scale -> HeptatonicScaleIntervals
+intervals scale =
+    case scale of
+        HeptatonicScale pitchClass heptatonicScaleIntervals ->
+            heptatonicScaleIntervals
 
 
-ionianIntervals : HeptatonicScaleIntervals
-ionianIntervals =
-    { first = interval PerfectUnison
-    , second = interval MajorSecond
-    , third = interval MajorThird
-    , fourth = interval PerfectFourth
-    , fifth = interval PerfectFifth
-    , sixth = interval MajorSixth
-    , seventh = interval MajorSeventh
-    }
+lydian : PitchClass -> Scale
+lydian root =
+    HeptatonicScale root
+        { first = interval PerfectUnison
+        , second = interval MajorSecond
+        , third = interval MajorThird
+        , fourth = interval AugmentedFourth
+        , fifth = interval PerfectFifth
+        , sixth = interval MajorSixth
+        , seventh = interval MajorSeventh
+        }
 
 
-mixolydianIntervals : HeptatonicScaleIntervals
-mixolydianIntervals =
-    { first = interval PerfectUnison
-    , second = interval MajorSecond
-    , third = interval MajorThird
-    , fourth = interval PerfectFourth
-    , fifth = interval PerfectFifth
-    , sixth = interval MajorSixth
-    , seventh = interval MinorSeventh
-    }
+ionian : PitchClass -> Scale
+ionian root =
+    HeptatonicScale root
+        { first = interval PerfectUnison
+        , second = interval MajorSecond
+        , third = interval MajorThird
+        , fourth = interval PerfectFourth
+        , fifth = interval PerfectFifth
+        , sixth = interval MajorSixth
+        , seventh = interval MajorSeventh
+        }
 
 
-dorianIntervals : HeptatonicScaleIntervals
-dorianIntervals =
-    { first = interval PerfectUnison
-    , second = interval MajorSecond
-    , third = interval MinorThird
-    , fourth = interval PerfectFourth
-    , fifth = interval PerfectFifth
-    , sixth = interval MajorSixth
-    , seventh = interval MinorSeventh
-    }
+mixolydian : PitchClass -> Scale
+mixolydian root =
+    HeptatonicScale root
+        { first = interval PerfectUnison
+        , second = interval MajorSecond
+        , third = interval MajorThird
+        , fourth = interval PerfectFourth
+        , fifth = interval PerfectFifth
+        , sixth = interval MajorSixth
+        , seventh = interval MinorSeventh
+        }
 
 
-aeolianIntervals : HeptatonicScaleIntervals
-aeolianIntervals =
-    { first = interval PerfectUnison
-    , second = interval MajorSecond
-    , third = interval MinorThird
-    , fourth = interval PerfectFourth
-    , fifth = interval PerfectFifth
-    , sixth = interval MinorSixth
-    , seventh = interval MinorSeventh
-    }
+dorian : PitchClass -> Scale
+dorian root =
+    HeptatonicScale root
+        { first = interval PerfectUnison
+        , second = interval MajorSecond
+        , third = interval MinorThird
+        , fourth = interval PerfectFourth
+        , fifth = interval PerfectFifth
+        , sixth = interval MajorSixth
+        , seventh = interval MinorSeventh
+        }
 
 
-phrygianIntervals : HeptatonicScaleIntervals
-phrygianIntervals =
-    { first = interval PerfectUnison
-    , second = interval MinorSecond
-    , third = interval MinorThird
-    , fourth = interval PerfectFourth
-    , fifth = interval PerfectFifth
-    , sixth = interval MinorSixth
-    , seventh = interval MinorSeventh
-    }
+aeolian : PitchClass -> Scale
+aeolian root =
+    HeptatonicScale root
+        { first = interval PerfectUnison
+        , second = interval MajorSecond
+        , third = interval MinorThird
+        , fourth = interval PerfectFourth
+        , fifth = interval PerfectFifth
+        , sixth = interval MinorSixth
+        , seventh = interval MinorSeventh
+        }
 
 
-locrianIntervals : HeptatonicScaleIntervals
-locrianIntervals =
-    { first = interval PerfectUnison
-    , second = interval MinorSecond
-    , third = interval MinorThird
-    , fourth = interval PerfectFourth
-    , fifth = interval DiminishedFifth
-    , sixth = interval MinorSixth
-    , seventh = interval MinorSeventh
-    }
+phrygian : PitchClass -> Scale
+phrygian root =
+    HeptatonicScale root
+        { first = interval PerfectUnison
+        , second = interval MinorSecond
+        , third = interval MinorThird
+        , fourth = interval PerfectFourth
+        , fifth = interval PerfectFifth
+        , sixth = interval MinorSixth
+        , seventh = interval MinorSeventh
+        }
+
+
+locrian : PitchClass -> Scale
+locrian root =
+    HeptatonicScale root
+        { first = interval PerfectUnison
+        , second = interval MinorSecond
+        , third = interval MinorThird
+        , fourth = interval PerfectFourth
+        , fifth = interval DiminishedFifth
+        , sixth = interval MinorSixth
+        , seventh = interval MinorSeventh
+        }
 
 
 isInScale : PitchClass -> Scale -> Bool

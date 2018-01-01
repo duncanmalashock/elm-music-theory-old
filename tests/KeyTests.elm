@@ -1,7 +1,7 @@
 module KeyTests exposing (suite)
 
 import PitchClass exposing (PitchClass, LetterName(..), Accidental(..), pitchClass)
-import Key exposing (Key, Degree(..), majorKey, minorKey)
+import Key exposing (Key, majorKey, minorKey)
 import Test exposing (..)
 import Helpers as Expect
 
