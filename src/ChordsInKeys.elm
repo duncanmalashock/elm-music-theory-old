@@ -6,7 +6,7 @@ module ChordsInKeys
         )
 
 import Key exposing (Key(..), Degree(..))
-import Chord exposing (Chord, TriadQuality(..), SeventhQuality(..))
+import Chord exposing (Chord(..), TriadQuality(..), SeventhQuality(..))
 import Scale exposing (HeptatonicScaleIntervals)
 import Interval exposing (Interval)
 import SpellIntervals
@@ -14,7 +14,12 @@ import SpellIntervals
 
 isInKey : Key -> Chord -> Bool
 isInKey key chord =
-    List.member chord (List.map (seventhChordAtDegree key) [ I, II, III, IV, V, VI, VII ])
+    case chord of
+        Triad _ triadQuality ->
+            List.member chord (List.map (triadChordAtDegree key) [ I, II, III, IV, V, VI, VII ])
+
+        Seventh _ seventhQuality ->
+            List.member chord (List.map (seventhChordAtDegree key) [ I, II, III, IV, V, VI, VII ])
 
 
 keysForChord : Chord -> List Key

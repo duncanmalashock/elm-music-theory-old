@@ -68,7 +68,23 @@ suite =
                             ]
             ]
         , describe "ChordsInKeys.keysForChord"
-            [ test "returns the keys a chord belongs to" <|
+            [ test "returns the keys a triad chord belongs to" <|
+                \_ ->
+                    let
+                        keys =
+                            Chord.triad C Natural Major
+                                |> ChordsInKeys.keysForChord
+                    in
+                        Expect.keyListsEqual
+                            keys
+                            [ majorKey (pitchClass C Natural)
+                            , minorKey (pitchClass A Natural)
+                            , majorKey (pitchClass F Natural)
+                            , minorKey (pitchClass D Natural)
+                            , majorKey (pitchClass G Natural)
+                            , minorKey (pitchClass E Natural)
+                            ]
+            , test "returns the keys a seventh chord belongs to" <|
                 \_ ->
                     let
                         keys =

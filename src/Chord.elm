@@ -1,6 +1,6 @@
 module Chord
     exposing
-        ( Chord
+        ( Chord(..)
         , TriadQuality(..)
         , SeventhQuality(..)
         , triad
