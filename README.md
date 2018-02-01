@@ -25,6 +25,11 @@ A distance between two pitch classes.
 Interval.semitoneDistance <| interval MajorSeventh
     
 ➜ 11
+
+SpellIntervals.getPitchClassAtIntervalFrom (pitchClass A Natural) (interval MajorSeventh)
+    |> PitchClass.toString
+
+➜ "G♯"
 ```
 
 ### Chord
