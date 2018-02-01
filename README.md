@@ -45,7 +45,7 @@ Chord.seventh F Sharp MajorSeven
     |> Chord.pitchClasses
     |> List.map PitchClass.toString
 
-➜ ["F♯","A♯","C♯","E♯"]
+➜ [ "F♯", "A♯", "C♯", "E♯" ]
 ```
 
 ### Scale
@@ -56,7 +56,7 @@ Scale.dorian (pitchClass C Natural)
     |> pitchClassesInScale
     |> List.map PitchClass.toString
     
-➜ ["D","E","F","G","A","B","C"]
+➜ [ "D", "E", "F", "G", "A", "B", "C" ]
 ```
 
 ### Key
@@ -67,21 +67,25 @@ Key.major (pitchClass B Flat)
     |> Key.accidentals
     |> List.map PitchClass.toString
     
-➜ ["B♭","E♭"]
+➜ [ "B♭", "E♭" ]
 ```
 
 ### ChordsInKeys
-The `ChordsInKeys` module can analyze chord/key relationships.
+The `ChordsInKeys` module can analyze chord/key relationships:
+
+The chords at degrees of the scale:
 ```
 Key.major (pitchClass D Flat)
-    |> ChordsInKeys.seventhChordAtDegree
+    |> List.map (ChordsInKeys.seventhChordAtDegree) [ I, II, III, IV, V, VI, VII ]
     |> List.map Chord.toString
 
-➜ ["A♭7","B♭-7","C-7♭5","D♭Δ","E♭-7","F-7","G♭Δ"]
-
+➜ [ "A♭7", "B♭-7", "C-7♭5", "D♭Δ", "E♭-7", "F-7", "G♭Δ" ]
+```
+The keys a chord belongs to:
+```
 Chord.triad C Natural Major
     |> ChordsInKeys.keysForChord
     |> List.map Key.toString
     
-➜ ["C major","A minor","F major","D minor","G major","E minor"]
+➜ [ "C major", "A minor", "F major", "D minor", "G major", "E minor" ]
 ```
